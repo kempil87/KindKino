@@ -2,8 +2,8 @@ import React, { Fragment, PropsWithChildren } from 'react';
 
 import cc from 'classcat';
 
-import { Footer } from '~/layout/Footer/Footer';
-import { Header } from '~/layout/Header/Header';
+import { Footer } from '~/layout/Footer/footer';
+import { Header } from '~/layout/Header/header';
 interface Props {
   classNameContent?: string;
 }
@@ -13,7 +13,7 @@ export const MainLayout = ({
 }: PropsWithChildren<Props>) => (
   <Fragment>
     <Header />
-    <div className={cc('h-full ', classNameContent)}>{children}</div>
+    <div className={cc(['h-full ', classNameContent])}>{children}</div>
 
     <Footer />
   </Fragment>

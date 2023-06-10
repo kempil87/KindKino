@@ -1,4 +1,4 @@
-import { ROUTES } from "~/shared/constants/routes-links";
+import { ROUTES } from '~/shared/constants/routes-links';
 interface NavLink {
   name: string;
   path: string;

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import { MainLayout } from '~/layout/MainLayout/MainLayout';
+import { MainLayout } from '~/layout/MainLayout/main-layout';
 
 export default function Home() {
   // const { data } = useQuery({
