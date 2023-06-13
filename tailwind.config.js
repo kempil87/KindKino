@@ -7,7 +7,14 @@ module.exports = {
         "./src/**/*.{js,ts,jsx,tsx,mdx}",
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                primary: 'rgb(102,35,232)',
+                dark: 'rgb(22 23 29)',
+                border: 'rgb(44 45 53)',
+                'card-bg': '#101011'
+            }
+        },
     },
     plugins: [],
 }

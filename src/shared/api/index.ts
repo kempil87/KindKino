@@ -2,10 +2,16 @@ import axios, { AxiosError, type AxiosRequestConfig } from 'axios';
 
 import { appConfig } from '../../../appConfig';
 
-export const apiRequest = async ({ ...options }: AxiosRequestConfig) => {
+interface ApiRequestProps extends AxiosRequestConfig {
+  v1?: boolean;
+}
+export const apiRequest = async ({
+  v1 = false,
+  ...options
+}: ApiRequestProps) => {
   try {
     const response = await axios.request({
-      baseURL: appConfig.BASE_URL,
+      baseURL: appConfig[v1 ? 'BASE_URL_V1' : 'BASE_URL'],
       headers: {
         'Content-Type': 'application/json',
         'X-API-KEY': appConfig.key,

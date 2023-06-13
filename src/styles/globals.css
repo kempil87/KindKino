@@ -46,6 +46,7 @@ body {
     overflow-x: hidden;
     font-family: ALSGranate sans-serif;
     font-weight: 300;
+    scrollbar-gutter: stable;
 }
 
 html, body {
@@ -53,8 +54,48 @@ html, body {
 }
 
 #__next {
-    @apply flex-1 h-full flex flex-col text-white
+    @apply flex-1 h-full flex flex-col text-white justify-between
 }
 
+::-webkit-scrollbar {
+    width: 7px;
+}
 
+::-webkit-scrollbar-track {
+    width: 1px;
+    background: #777;
+    border: 3px solid #000;
+}
 
+::-webkit-scrollbar-thumb {
+    width: 5px;
+    background: #ccc;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+a {
+    text-decoration: none;
+}
+
+p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.16em;
+    text-transform: none;
+}
+
+button {
+    background: none;
+    border: none;
+    outline: none;
+}
+
+input {
+    outline: none;
+    border: none;
+}
+
+.app-container {
+    @apply px-[100px]
+}

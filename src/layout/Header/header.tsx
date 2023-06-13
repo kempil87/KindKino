@@ -1,23 +1,62 @@
 import React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import cc from 'classcat';
+import { useStore } from "effector-react";
+
+import { Icon } from '~/components/icon/icon';
+import { Logo } from '~/components/logo/logo';
+
+import style from '../../styles/header.module.css';
 
 import { NAV_LINKS } from '~/shared/constants/nav-links';
+import { ROUTES } from '~/shared/constants/routes-links';
+import { $menu, toggleMenu } from '~/shared/store/menu';
+import { $search, hideSearch, showSearch } from "~/shared/store/search";
 
-export const Header = () => 
-// const search = useStore($search);
+export const Header = () => {
+  const { pathname } = useRouter();
+  const searchVisible = useStore($search);
+  const menuVisible = useStore($menu);
 
-  (
-    <div className="h-12 primary-gradient">
-      <div className="flex items-center justify-between">
-        <h4 >KindKino</h4>
-        <div className="flex items-center gap-3">
-          {NAV_LINKS.map(({ path, name }) => (
-            <Link key={path} href={path}>
+  return (
+    <div className={cc([style.header, 'app-container h-[78px]'])}>
+      <div
+        className="h-[12px] w-[38px]  cursor-pointer transition-all hover:opacity-75"
+        onClick={() => toggleMenu()}
+      >
+        <div
+          className={cc([
+            style.burgerMenu,
+            { [style.burgerMenuActive]: menuVisible },
+          ])}
+        />
+      </div>
+
+      <Logo path={ROUTES.home} />
+
+      <nav className="flex items-center gap-5">
+        <Icon
+          className={style.search}
+          name={searchVisible ? 'close' : 'search'}
+          onClick={() => (searchVisible ? hideSearch() : showSearch())}
+        />
+
+        {NAV_LINKS.map(({ path, name }) => {
+          const isActive = path === pathname;
+
+          return (
+            <Link
+              key={path}
+              className={`${style.NavLink} ${isActive && style.NavLinkActive}`}
+              href={path}
+            >
               {name}
             </Link>
-          ))}
-        </div>
-      </div>
+          );
+        })}
+      </nav>
     </div>
-  )
-;
+  );
+};

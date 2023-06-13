@@ -1,0 +1,15 @@
+.searchWrapper {
+  @apply fixed z-[100] top-0 bg-black/80 -translate-y-full left-0 right-0 h-[50vh] rounded-b-2xl pt-[128px] transition-all px-[100px]
+}
+
+.searchWrapper p{
+  @apply uppercase
+}
+
+.searchWrapper input {
+  @apply rounded-md bg-white/60 w-96 h-10 p-1.5
+}
+
+.searchWrapper input::placeholder {
+  @apply text-white/80
+}

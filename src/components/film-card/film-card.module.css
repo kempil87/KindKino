@@ -1,0 +1,16 @@
+
+.filmCard {
+    @apply relative transition-all
+}
+
+.filmCard:hover img {
+    @apply brightness-[.2] transition-all
+}
+
+.filmCard:hover > div {
+    @apply !opacity-100 transition-all
+}
+
+.highRate {
+    @apply text-green-500
+}

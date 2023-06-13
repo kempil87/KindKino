@@ -1,0 +1,66 @@
+.header {
+    @apply flex items-center justify-between py-1.5 z-[110] fixed top-0 left-0 right-0 w-full backdrop-blur-md
+}
+
+.burgerMenu {
+    height: 2px;
+    width: 38px;
+    background-color: white;
+    position: relative;
+}
+
+.burgerMenu {
+    @apply transition-all
+}
+
+.burgerMenu::before {
+    @apply transition-all
+}
+
+.burgerMenu::before {
+    content: '';
+    height: 2px;
+    width: 38px;
+    background-color: white;
+    position: absolute;
+    top: 12px;
+    left: 0;
+}
+
+.burgerMenuActive {
+    @apply rotate-45 transition-all rounded-[1px]
+}
+
+.burgerMenuActive::before {
+    @apply -rotate-90 transition-all -translate-y-3 rounded-[1px]
+}
+
+.logo {
+    font-size: 44px;
+    display: flex;
+    align-items: center;
+}
+
+.logoLeft {
+    transform: rotate(-4deg);
+    text-shadow: 2px -2px 14px white;
+    user-select: none;
+}
+
+.logoRight {
+    transform: rotate(4deg);
+    text-shadow: 2px -2px 14px white;
+    user-select: none;
+}
+
+.NavLink {
+    @apply transition-all hover:text-primary uppercase
+}
+
+.NavLinkActive {
+    @apply text-primary
+}
+
+.search {
+    @apply transition-all hover:text-primary cursor-pointer h-5 w-5
+}

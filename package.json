@@ -29,6 +29,8 @@
     "dayjs": "1.11.8",
     "effector": "22.8.6",
     "effector-react": "22.5.3",
+    "js-cookie": "^3.0.5",
+    "keen-slider": "^6.8.5",
     "next": "13.4.4",
     "nprogress": "0.2.0",
     "plural-ru": "2.0.2",

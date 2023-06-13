@@ -39,7 +39,7 @@
     "next/core-web-vitals"
   ],
   "rules": {
-    "prettier/prettier": ["off"],
+    "prettier/prettier": ["warn"],
     // react
     "react/react-in-jsx-scope": "off",
     "react/jsx-sort-props": [

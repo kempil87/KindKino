@@ -1,3 +1,5 @@
+import { MainLayout } from "~/layout/MainLayout/main-layout";
+
 export default function AboutPage() {
-  return <div>AboutPage</div>;
+  return <MainLayout>About</MainLayout>;
 }
