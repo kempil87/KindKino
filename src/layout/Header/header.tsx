@@ -1,19 +1,20 @@
-import React from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-import cc from 'classcat';
-import { useStore } from "effector-react";
+import cc from "classcat";
+import { useStore } from 'effector-react';
 
-import { Icon } from '~/components/icon/icon';
-import { Logo } from '~/components/logo/logo';
+import { Icon } from "~/components/icon/icon";
+import { Logo } from "~/components/logo/logo";
 
-import style from '../../styles/header.module.css';
+import style from "../../styles/header.module.css";
 
-import { NAV_LINKS } from '~/shared/constants/nav-links';
-import { ROUTES } from '~/shared/constants/routes-links';
-import { $menu, toggleMenu } from '~/shared/store/menu';
-import { $search, hideSearch, showSearch } from "~/shared/store/search";
+import { NAV_LINKS } from "~/shared/constants/nav-links";
+import { ROUTES } from "~/shared/constants/routes-links";
+import { $menu, toggleMenu } from "~/shared/store/menu";
+import { modalApi } from '~/shared/store/modal';
+import { $search, hideSearch, showSearch } from '~/shared/store/search';
 
 export const Header = () => {
   const { pathname } = useRouter();
@@ -37,12 +38,6 @@ export const Header = () => {
       <Logo path={ROUTES.home} />
 
       <nav className="flex items-center gap-5">
-        <Icon
-          className={style.search}
-          name={searchVisible ? 'close' : 'search'}
-          onClick={() => (searchVisible ? hideSearch() : showSearch())}
-        />
-
         {NAV_LINKS.map(({ path, name }) => {
           const isActive = path === pathname;
 
@@ -56,6 +51,18 @@ export const Header = () => {
             </Link>
           );
         })}
+
+        <Icon
+          className={style.search}
+          name={searchVisible ? "close" : "search"}
+          onClick={() => (searchVisible ? hideSearch() : showSearch())}
+        />
+
+        <Icon
+          className={style.search}
+          name="user"
+          onClick={() => modalApi.show('auth')}
+        />
       </nav>
     </div>
   );

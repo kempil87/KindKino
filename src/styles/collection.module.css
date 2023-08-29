@@ -1,0 +1,83 @@
+.collectionTitle {
+    @apply text-3xl mb-8
+}
+
+.collectionWrap {
+    @apply grid grid-cols-4 gap-8
+}
+
+.collectionItemWrap {
+    @apply relative h-[170px] cursor-pointer transition-all
+}
+
+.collectionItem {
+    display: flex;
+    width: 100%;
+    border-radius: 14px;
+    height: 170px;
+    background-image: url("../../public/images/images.jpeg");
+    background-size: cover;
+    align-items: end;
+    padding-bottom: 12px;
+    justify-content: center;
+    position: absolute;
+}
+
+.collectionItemBgOne {
+    position: absolute;
+    content: '';
+    background-image: url("../../public/images/images.jpeg");
+    background-size: cover;
+    top: -8px;
+    opacity: .6;
+    left: 8px;
+    right: 8px;
+    border-radius: 14px;
+    height: 170px;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.collectionItemBgSec {
+    position: absolute;
+    content: '';
+    background-image: url("../../public/images/images.jpeg");
+    background-size: cover;
+    top: -14px;
+    opacity: .52;
+    left: 18px;
+    right: 18px;
+    border-radius: 14px;
+    height: 170px;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.collectionItemWrap:hover  {
+    @apply -translate-y-[3px] transition-all
+}
+
+.collectionItemWrap:hover  .collectionItemBgOne {
+    top: -10px;
+    left: 14px;
+    right: 14px;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.collectionItemWrap:hover  .collectionItemBgSec {
+    top: -16px;
+    left: 24px;
+    right: 24px;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+
+.collectionItem span {
+    @apply bg-dark rounded-2xl px-6 py-1 text-white font-medium uppercase
+}

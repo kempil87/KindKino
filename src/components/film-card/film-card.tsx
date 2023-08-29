@@ -1,23 +1,27 @@
-import React, { MouseEvent } from "react";
-import Link from "next/link";
+import React, { MouseEvent, useState } from 'react';
+import Link from 'next/link';
 
-import cc from "classcat";
-import { useStore } from "effector-react";
+import cc from 'classcat';
+import { useStore } from 'effector-react';
 
-import { Icon } from '~/components/icon/icon';
+import { Icon } from "~/components/icon/icon";
 
-import style from "./film-card.module.css";
+import imagePlug from "../../../public/images/images.jpeg";
 
-import { ROUTES } from "~/shared/constants/routes-links";
-import { showAlert } from '~/shared/helpers/show-alert';
-import { uppercaseFirstLetter } from '~/shared/helpers/uppercase-first-letter';
+import style from './film-card.module.css';
+
+import { ROUTES } from '~/shared/constants/routes-links';
+import { showAlert } from "~/shared/helpers/show-alert";
+import { uppercaseFirstLetter } from "~/shared/helpers/uppercase-first-letter";
 import {
   $favorites,
   removeFavorites,
   updateFavorites,
-} from "~/shared/store/favorites";
-import { Film } from '~/shared/types/film/film';
+} from '~/shared/store/favorites';
+import { Film } from "~/shared/types/film/film";
+
 export const FilmCard = (props: Film) => {
+  const [imageLoading, setImageLoading] = useState(true);
   const favorites = useStore($favorites);
   const isFavorite = favorites
     .flatMap((i) => [i.kinopoiskId])
@@ -42,12 +46,21 @@ export const FilmCard = (props: Film) => {
     });
   };
 
+  const onImageLoad = () => {
+    setImageLoading(false);
+  };
+
   return (
     <Link
       className={style.filmCard}
       href={ROUTES.film(String(props.kinopoiskId))}
     >
-      <img className="rounded-2xl transition-all" src={props.posterUrl} />
+      <img
+        alt={props.nameRu}
+        className="min-h-[330px] rounded-2xl object-cover transition-all"
+        src={imageLoading ? imagePlug.src : props.posterUrl}
+        onLoad={onImageLoad}
+      />
 
       <div
         className="absolute left-3 right-3 top-3 flex justify-between  opacity-0 transition-all"

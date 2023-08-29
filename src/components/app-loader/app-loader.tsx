@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 import { Logo } from '~/components/logo/logo';
 
-let timer;
+let timer: NodeJS.Timeout;
 
 export const AppLoader = () => {
   const loadingRef = useRef<HTMLDivElement>(null);

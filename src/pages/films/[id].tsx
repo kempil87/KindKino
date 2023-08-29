@@ -20,10 +20,14 @@ export default function Page() {
     query: { id },
   } = useRouter();
   const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const isDescButtonVisible =
+    descriptionRef.current &&
+    descriptionRef.current?.getBoundingClientRect()?.height > 73;
 
+  console.log(isDescButtonVisible);
   const filmQuery = useQuery({
     enabled: !!id,
-    queryFn: () => fetchFilms.view({ id }),
+    queryFn: () => fetchFilms.view({ id: id as string }),
     queryKey: ["film-view", id],
   });
 
@@ -121,7 +125,7 @@ export default function Page() {
                   <Link
                     key={staffId}
                     className="underline-offset-3 whitespace-nowrap underline transition-all hover:text-primary"
-                    href={ROUTES.staff(staffId)}
+                    href={ROUTES.staff(String(staffId))}
                   >
                     {nameRu} {array.length !== index + 1 && ', '}
                   </Link>
@@ -138,7 +142,7 @@ export default function Page() {
                   <Link
                     key={staffId}
                     className="underline-offset-3 whitespace-nowrap underline transition-all hover:text-primary"
-                    href={ROUTES.staff(staffId)}
+                    href={ROUTES.staff(String(staffId))}
                   >
                     {nameRu} {array.length !== index + 1 && ", "}
                   </Link>

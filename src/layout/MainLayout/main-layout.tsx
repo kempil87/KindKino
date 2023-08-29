@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { useQuery } from '@tanstack/react-query';
 import cc from "classcat";
 
+import { AuthModal } from '~/components/auth-modal/auth-modal';
 import { SearchDrawer } from "~/components/search-drawer/search-drawer";
 
 import { Footer } from "~/layout/Footer/footer";
@@ -42,6 +43,7 @@ export const MainLayout = ({
         {children}
       </div>
 
+      <AuthModal />
       <Footer />
     </Fragment>
   );

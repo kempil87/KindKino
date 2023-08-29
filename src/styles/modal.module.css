@@ -1,0 +1,16 @@
+.modal {
+    @apply fixed inset-0 z-[8000] bg-black/70 flex justify-center items-center invisible opacity-0 transition-all
+}
+
+.modalActive {
+    @apply visible opacity-100 transition-all
+}
+
+
+.content {
+    @apply bg-dark p-10 rounded-2xl relative
+}
+
+.closeIcon {
+    @apply absolute top-5 right-5 cursor-pointer hover:opacity-70 transition-all
+}

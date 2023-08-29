@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  images: {
+    domains: ['kinopoiskapiunofficial.tech'],
+    formats: ['image/avif', 'image/webp'],
+  },
+  // reactStrictMode: true,
 };
 
 module.exports = nextConfig;

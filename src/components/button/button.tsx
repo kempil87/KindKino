@@ -20,7 +20,7 @@ export const Button = ({
   <button
     className={`
       ${className}
-      hover:bg-opacity-70' inline-flex  items-center justify-center whitespace-nowrap rounded-md px-8 py-2 font-medium transition-all
+      inline-flex items-center justify-center whitespace-nowrap rounded-md px-8 py-2 font-medium transition-all hover:bg-opacity-70
       ${BUTTON_VIEW[view]}`}
     {...props}
   >

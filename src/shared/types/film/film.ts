@@ -8,8 +8,8 @@ export type FilmsResponse = ApiPaginationResponse<{
   films: Film[];
 }>;
 export interface FilmsAllRequest extends Partial<PaginationParams> {
-  countries?: number[];
-  genres?: number[];
+  countries?: string;
+  genres?: string;
   order?: string;
   type?: string;
 }
@@ -21,7 +21,7 @@ export interface FilmsAllResponse {
 }
 
 export interface FilmViewRequest {
-  id: number;
+  id: string;
 }
 
 export interface FilmViewResponse extends Film {
