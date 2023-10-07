@@ -7,20 +7,23 @@ import {useUnit} from 'effector-react/scope';
 
 import {NAV_LINKS} from '~/shared/constants/nav-links';
 import {ROUTES} from '~/shared/constants/routes-links';
-import {$menu, toggleMenu} from '~/shared/store/menu';
-import {showModal} from '~/shared/store/modal';
+import {$menu, toggleMenu} from '~/shared/models/menu';
+import {showModal} from '~/shared/models/modal';
+import {$profile} from '~/shared/models/profile';
 
 import style from '../../styles/header.module.css';
 
 import {Icon} from '~/components/icon/icon';
 import {Logo} from '~/components/logo/logo';
+import {ProfileMenu} from '~/components/profile-menu/profile-menu';
 import {SearchDrawer} from '~/components/search-drawer/search-drawer';
 
 export const Header = () => {
   const {pathname} = useRouter();
 
-  const { $menuModel, toggleMenuFn,showModalFn} = useUnit({
+  const { $menuModel, toggleMenuFn,showModalFn,$profileModel} = useUnit({
     $menuModel: $menu,
+    $profileModel: $profile,
     showModalFn: showModal,
     toggleMenuFn: toggleMenu,
   });
@@ -28,7 +31,7 @@ export const Header = () => {
   return (
     <div className={cc([style.header, 'app-container h-[78px]'])}>
       <button
-        className="h-[12px] w-[38px] transition-all hover:opacity-75"
+        className="h-[12px] children:cursor-pointer w-[38px] transition-all hover:opacity-75"
         onClick={() => toggleMenuFn()}
       >
         <div
@@ -58,11 +61,16 @@ export const Header = () => {
 
         <SearchDrawer />
 
-        <Icon
-          className={style.search}
-          name="user"
-          onClick={() => showModalFn('auth')}
-        />
+        {$profileModel ? (
+          <ProfileMenu />
+        ): (
+          <Icon
+            className={style.search}
+            name="user"
+            onClick={() => showModalFn('auth')}
+          />
+        )}
+
       </nav>
     </div>
   );

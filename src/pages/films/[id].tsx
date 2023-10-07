@@ -9,11 +9,13 @@ import cc from 'classcat';
 import { fetchFilms } from '~/shared/api/films/films';
 import { fetchStaff } from '~/shared/api/staff/staff';
 import { ROUTES } from '~/shared/constants/routes-links';
-import { convertTime } from '~/shared/helpers/convert-time';
-import { uppercaseFirstLetter } from '~/shared/helpers/uppercase-first-letter';
+import { convertTime } from '~/shared/utils/convert-time';
+import { uppercaseFirstLetter } from '~/shared/utils/uppercase-first-letter';
 
 import { AppLoader } from '~/components/app-loader/app-loader';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
+import {FilmCard} from '~/components/film-card/film-card';
+import {Title} from '~/components/title/title';
 import {MainLayout} from '~/layout/main-layout/main-layout';
 
 export default function Page() {
@@ -32,6 +34,18 @@ export default function Page() {
     enabled: !!filmQuery.data?.kinopoiskId,
     queryFn: () => fetchStaff.film({ filmId: filmQuery.data?.kinopoiskId }),
     queryKey: ['film-staff', filmQuery.data?.kinopoiskId],
+  });
+
+  const filmSimilariesQuery = useQuery({
+    enabled: !!filmQuery.data?.kinopoiskId,
+    queryFn: () => fetchFilms.similary({ id: String(filmQuery.data?.kinopoiskId)}),
+    queryKey: ['film-similaries-list', filmQuery.data?.kinopoiskId],
+  });
+
+  const filmPrequelsQuery = useQuery({
+    enabled: !!filmQuery.data?.kinopoiskId,
+    queryFn: () => fetchFilms.prequels({ id: String(filmQuery.data?.kinopoiskId) }),
+    queryKey: ['film-prequels-list', filmQuery.data?.kinopoiskId],
   });
 
   const directors = filmStaffQuery.data?.filter(
@@ -186,6 +200,31 @@ export default function Page() {
         >
           Показать полностью
         </button>
+
+        <div className='flex flex-col space-y-4 my-4'>
+          <Title>Похожие на {filmQuery.data?.nameRu} ({filmQuery.data?.year}) фильмы</Title>
+
+          {!filmSimilariesQuery.isLoading && filmSimilariesQuery.data && (
+            <div className='grid grid-cols-6 gap-6'>
+              {filmSimilariesQuery.data?.items.slice(0,6).map(el => (
+                <FilmCard key={el.filmId} {...el} />
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className='flex flex-col space-y-4 my-4'>
+          <Title>Сиквелы и привеклы</Title>
+
+          {!filmPrequelsQuery.isLoading && filmPrequelsQuery.data && (
+            <div className='grid grid-cols-6 gap-6'>
+              {filmPrequelsQuery.data.slice(0,6).map(el => (
+                <FilmCard key={el.filmId} {...el} />
+              ))}
+            </div>
+          )}
+        </div>
+
       </div>
     </MainLayout>
   );

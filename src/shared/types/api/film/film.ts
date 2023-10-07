@@ -21,3 +21,13 @@ export interface ApiFilmView {
   req: FilmViewRequest;
   res: Promise<FilmViewResponse>;
 }
+
+export interface ApiFilmSimilary {
+  req: FilmViewRequest;
+  res: Promise<FilmsAllResponse>;
+}
+
+export interface ApiFilmSSequels {
+  req: FilmViewRequest;
+  res: Promise<FilmsAllResponse['items']>;
+}

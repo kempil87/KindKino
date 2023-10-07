@@ -14,6 +14,7 @@ import 'dayjs/locale/ru';
 import { AppLoader } from '~/components/app-loader/app-loader';
 
 dayjs.locale('ru-RU');
+
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

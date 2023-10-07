@@ -70,7 +70,7 @@ export const Input = <Name extends FieldValues>({
             />
 
             {error && (
-              <span className="mt-1 font-medium w-fit pl-3 text-sm text-red-500 transition-all">
+              <span className="mt-1 font-medium w-fit pl-3 text-xs text-red-500 transition-all">
                 {error}
               </span>
             )}

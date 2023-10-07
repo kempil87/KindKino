@@ -6,14 +6,16 @@ import cc from 'classcat';
 import {useUnit} from 'effector-react/scope';
 
 import {ROUTES} from '~/shared/constants/routes-links';
-import {showAlert} from '~/shared/helpers/show-alert';
-import {uppercaseFirstLetter} from '~/shared/helpers/uppercase-first-letter';
+import {useAuthorized} from '~/shared/hooks/use-authorized/use-authorized';
 import {
   $favorites,
   removeFavorites,
   updateFavorites,
-} from '~/shared/store/favorites';
+} from '~/shared/models/favorites';
+import {showModal} from '~/shared/models/modal';
 import {Film} from '~/shared/types/film/film';
+import {showAlert} from '~/shared/utils/show-alert';
+import {uppercaseFirstLetter} from '~/shared/utils/uppercase-first-letter';
 
 import imagePlug from '../../../public/images/images.jpeg';
 
@@ -22,10 +24,12 @@ import style from './film-card.module.css';
 import {Icon} from '~/components/icon/icon';
 
 export const FilmCard = (props: Film) => {
+  const isAuthorized = useAuthorized();
   const [imageLoading, setImageLoading] = useState(true);
-  const {$favoritesModel, updateFavoritesFn, removeFavoritesFn} = useUnit({
+  const {$favoritesModel,showModalFn, updateFavoritesFn, removeFavoritesFn} = useUnit({
     $favoritesModel: $favorites,
     removeFavoritesFn: removeFavorites,
+    showModalFn: showModal,
     updateFavoritesFn: updateFavorites
   });
 
@@ -35,8 +39,14 @@ export const FilmCard = (props: Film) => {
 
   const handleAddFavorites = (e: MouseEvent) => {
     e.preventDefault();
+    if (!isAuthorized) {
+      showModalFn('auth');
+
+      return;
+    }
     const {kinopoiskId, nameRu} = props;
 
+    if (!kinopoiskId) return;
     if (isFavorite) {
       removeFavoritesFn({kinopoiskId});
       showAlert({
@@ -104,15 +114,18 @@ export const FilmCard = (props: Film) => {
           )}
         </div>
 
-        <Icon
-          name="bookmark"
-          size={23}
-          className={cc([
-            {'text-primary': isFavorite},
-            'cursor-pointer transition-all hover:text-primary',
-          ])}
-          onClick={handleAddFavorites}
-        />
+        {props.kinopoiskId && (
+          <Icon
+            name="bookmark"
+            size={23}
+            className={cc([
+              {'text-primary': isFavorite},
+              'cursor-pointer transition-all hover:text-primary',
+            ])}
+            onClick={handleAddFavorites}
+          />
+        )}
+
       </div>
 
       <div
@@ -120,7 +133,7 @@ export const FilmCard = (props: Film) => {
         id="genres"
       >
         <div className="flex w-full flex-wrap items-center justify-center gap-2">
-          {props.genres.slice(0, 3).map(({genre}) => (
+          {props.genres && props.genres.slice(0, 3).map(({genre}) => (
             <div
               key={genre}
               className="primary-gradient rounded-md px-2 py-0.5 text-sm font-normal "

@@ -1,8 +1,8 @@
-import {HTMLAttributes, PropsWithChildren} from 'react';
+import {ButtonHTMLAttributes, PropsWithChildren} from 'react';
 
 type ButtonView = 'default' | 'outline';
 
-interface Props extends HTMLAttributes<HTMLButtonElement> {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   view?: ButtonView;
 }
 

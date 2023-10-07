@@ -1,34 +1,34 @@
 /* eslint-disable effector/mandatory-scope-binding,react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
 import cc from 'classcat';
-import { useUnit } from 'effector-react/scope';
-import { FormProvider, useForm } from 'react-hook-form';
+import {useUnit} from 'effector-react/scope';
+import {FormProvider, useForm} from 'react-hook-form';
 import Skeleton from 'react-loading-skeleton';
 
-import { fetchFilms } from '~/shared/api/films/films';
+import {fetchFilms} from '~/shared/api/films/films';
+import {useQueriesData} from '~/shared/hooks/use-queries-data/use-queries-data';
+import {useUrlParams} from '~/shared/hooks/use-url-params/use-url-params';
+import {
+  $filmList, updateFilmList,
+} from '~/shared/models/film-list';
+import {$selectStore, resetSelect, updateSelect} from '~/shared/models/select';
+import {ApiFilmsAll} from '~/shared/types/api/film/film';
+import {FilterCountry, FilterGenre} from '~/shared/types/api/filter/filter';
 import {
   prepareSelectCountries,
   prepareSelectGenres,
-} from '~/shared/helpers/prepare-select-data';
-import { useQueriesData } from '~/shared/hooks/use-queries-data/use-queries-data';
-import { useUrlParams } from '~/shared/hooks/use-url-params/use-url-params';
-import {
-  $filmList, updateFilmList,
-} from '~/shared/store/film-list';
-import { $selectStore, resetSelect, updateSelect } from '~/shared/store/select';
-import {ApiFilmsAll} from '~/shared/types/api/film/film';
-import { FilterCountry, FilterGenre } from '~/shared/types/api/filter/filter';
+} from '~/shared/utils/prepare-select-data';
 
-import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
-import { Button } from '~/components/button/button';
-import { FilmCard } from '~/components/film-card/film-card';
-import { Select, SelectOption } from '~/components/select/select';
-import { MainLayout } from '~/layout/main-layout/main-layout';
+import {Breadcrumbs} from '~/components/breadcrumbs/breadcrumbs';
+import {Button} from '~/components/button/button';
+import {FilmCard} from '~/components/film-card/film-card';
+import {Select, SelectOption} from '~/components/select/select';
+import {MainLayout} from '~/layout/main-layout/main-layout';
 
 interface FormProps {
-  countries: SelectOption[];
-  genres: SelectOption[];
+    countries: SelectOption[];
+    genres: SelectOption[];
 }
 
 const getDefaultGenresValues = (list: FilterGenre[], find: string) => {
@@ -73,25 +73,26 @@ export default function Page() {
     selectStoreModel: $selectStore,
     updateFilmListFn: updateFilmList,
   });
-  const { updateUrlParams, queryParams, resetUrl } = useUrlParams();
+  const {updateUrlParams, queryParams, resetUrl} = useUrlParams();
 
-  const { filters } = useQueriesData();
+  const {filters} = useQueriesData();
 
   const methods = useForm<FormProps>();
 
-  const resetButtonVisible = !!Object.keys(selectStoreModel).length;
+  const resetButtonVisible = Object.values(methods.getValues()).some(Boolean);
 
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadButtonLoading, setLoadButtonIsLoading] = useState(false);
 
   const filtersUpdate = async (name: string, options: SelectOption[]) => {
     const values = options.map((i) => i.value);
 
-    await updateUrlParams([{ name, value: values.join(', ') }]);
-    handleUpdateSelect({ name, value: values[0] });
+    await updateUrlParams([{name, value: values.join(', ')}]);
+    handleUpdateSelect({name, value: values[0]});
   };
 
-  const fetchParams:ApiFilmsAll['req'] = {
+  const fetchParams: ApiFilmsAll['req'] = {
     // countries: selectStoreModel['countries'],
     // genres: selectStoreModel['genres'],
     order: 'NUM_VOTE',
@@ -100,18 +101,20 @@ export default function Page() {
   };
 
   const getFilms = async () => {
-    const { items } = await fetchFilms.all(fetchParams);
+    const {items} = await fetchFilms.all(fetchParams);
 
     updateFilmListFn(items);
     setIsLoading(false);
   };
 
   const getMore = async () => {
-    const { items } = await fetchFilms.all(fetchParams);
-
+    setLoadButtonIsLoading(true);
     setPage((p) => p + 1);
 
+    const {items} = await fetchFilms.all({...fetchParams, page: page + 1});
+
     updateFilmListFn(items);
+    setLoadButtonIsLoading(false);
     setIsLoading(false);
   };
 
@@ -129,11 +132,11 @@ export default function Page() {
     if (queryParams.genres && queryParams.countries) {
       const countries = getDefaultCountriesValues(
         filters?.countries || [],
-        queryParams.countries as string
+              queryParams.countries as string
       );
       const genres = getDefaultGenresValues(
         filters?.genres || [],
-        queryParams.genres as string
+            queryParams.genres as string
       );
 
       countries && methods.setValue('countries', countries);
@@ -145,7 +148,7 @@ export default function Page() {
     <MainLayout>
       <FormProvider {...methods}>
         <div className="app-container mb-6 mt-3 space-y-6">
-          <Breadcrumbs breadcrumbs={[{ label: 'Фильмы' }]} />
+          <Breadcrumbs breadcrumbs={[{label: 'Фильмы'}]}/>
 
           <h3 className="text-[34px] font-medium">Фильмы смотреть онлайн</h3>
 
@@ -172,16 +175,16 @@ export default function Page() {
               <Button
                 className={cc([
                   'invisible opacity-0',
-                  { '!visible !opacity-100': resetButtonVisible },
+                  {'!visible !opacity-100': resetButtonVisible},
                 ])}
                 onClick={resetFilters}
               >
-                Сбросить фильтры
+                  Сбросить фильтры
               </Button>
             </div>
             <div className="grid w-full grid-cols-6 gap-8">
               {isLoading ? (
-                Array.from({ length: 16 }).map((_, key) => (
+                Array.from({length: 16}).map((_, key) => (
                   <div key={key} className=" h-full gap-1">
                     <Skeleton
                       baseColor="#16171DFF"
@@ -209,10 +212,17 @@ export default function Page() {
                   </div>
                 ))
               ) : (
-                filmList.map((el) => <FilmCard {...el} key={el.kinopoiskId} />)
+                filmList.map((el) => <FilmCard {...el} key={el.kinopoiskId}/>)
               )}
             </div>
-            {!isLoading && <Button onClick={getMore}>Показать еще</Button>}
+            {!isLoading && (
+              <Button
+                disabled={isLoadButtonLoading}
+                onClick={getMore}
+              >
+                {isLoadButtonLoading ? 'Грузим еще фильмы' : 'Показать еще'}
+              </Button>
+            )}
           </div>
         </div>
       </FormProvider>
