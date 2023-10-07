@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/ban-ts-comment,@next/next/no-img-element */
 import {useRef, useState} from 'react';
 import Link from 'next/link';
 
@@ -79,7 +79,7 @@ export const SearchDrawer = () => {
             <>
               {!!index && <div className="my-1 h-px w-full bg-gradient-to-r from-[#3f414b00] via-[#3F414B] to-[#3f414b00]" />}
               <Link key={el.filmId} className='flex items-center space-x-2.5 rounded-xl  hover:shadow' href={ROUTES.film(String(el.filmId))}>
-                <img className='size-16 rounded-xl object-cover' src={el.posterUrl}/>
+                <img alt='banner' className='size-16 rounded-xl object-cover' src={el.posterUrl}/>
 
                 <div className="flex flex-col">
                   <span className='font-medium text-lg break-words'>

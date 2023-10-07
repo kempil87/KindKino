@@ -19,7 +19,7 @@ export const AuthModal = () => {
   const methods = useForm<FormProps>();
 
   const auth = (data: FormProps) => {
-    console.log(data);
+    data.email;
   };
 
   const onClose = () => {

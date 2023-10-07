@@ -1,4 +1,4 @@
-/* eslint-disable effector/mandatory-scope-binding */
+/* eslint-disable effector/mandatory-scope-binding,react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 
 import cc from 'classcat';

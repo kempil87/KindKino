@@ -1,4 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import React, {Fragment} from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import Skeleton from 'react-loading-skeleton';
@@ -33,8 +35,10 @@ export const MainSlider = () => {
             className="keen-slider__slide relative h-[530px] bg-cover bg-no-repeat"
             href={ROUTES.film(String(filmId))}
           >
-            <img
-              className='absolute inset-0 h-full w-full brightness-75 -z-10'
+            <Image
+              fill
+              alt='banner'
+              className='brightness-75 -z-10'
               src='https://htv-vsc.kion.ru:32122/CPS/images/universal/film/poster/202307/20230717/57/2023071714322794416d.jpg?x=2700&y=953&ar=ignore%201.5x,%20https://htv-vsc.kion.ru:32122/CPS/images/universal/film/poster/202307/20230717/57/2023071714322794416d.jpg?x=3600&y=1270&ar=ignore%202x,%20https://htv-vsc.kion.ru:32122/CPS/images/universal/film/poster/202307/20230717/57/2023071714322794416d.jpg?x=5400&y=1905&ar=ignore%203x'
             />
             <div className=" flex h-full flex-1 items-end justify-between p-7">

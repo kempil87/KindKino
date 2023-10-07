@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 import { useQuery } from '@tanstack/react-query';
@@ -32,11 +33,15 @@ export default function Page() {
     <MainLayout>
       <div className="app-container">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
-        <img
-          alt=""
-          className="h-96 w-72 rounded-2xl object-cover"
-          src={data?.posterUrl}
-        />
+        {data?.posterUrl && (
+          <Image
+            alt=""
+            className="h-96 w-72 rounded-2xl object-cover"
+            height={384}
+            src={data?.posterUrl}
+            width={288}
+          />
+        )}
 
         <div className="flex flex-col">
           <div className="flex flex-col space-y-2">

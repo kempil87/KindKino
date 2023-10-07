@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -66,6 +67,7 @@ export default function Page() {
         <div className="my-6 flex gap-[40px]">
           <div className="relative">
             <img
+              alt='banner'
               className="h-[420px] rounded-2xl object-cover shadow"
               src={filmQuery.data?.posterUrl}
             />

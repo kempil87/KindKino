@@ -39,7 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
           ...pageProps?.initialState,
         },
       }),
-    [],
+    [pageProps?.initialState],
   );
 
   if (typeof window !== 'undefined') {
