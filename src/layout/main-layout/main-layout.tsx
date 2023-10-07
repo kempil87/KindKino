@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import cc from 'classcat';
 
 import { fetchFilters } from '~/shared/api/filters/filters';
+import {useAuthorized} from '~/shared/hooks/use-authorized/use-authorized';
 
 import { AuthModal } from '~/components/auth-modal/auth-modal';
 import { Footer } from '~/layout/footer/footer';
@@ -21,6 +22,7 @@ export const MainLayout = ({
   headProps,
 }: PropsWithChildren<Props>) => {
   useQuery({ queryFn: () => fetchFilters(), queryKey: ['filters'] });
+  useAuthorized();
 
   return (
     <Fragment>

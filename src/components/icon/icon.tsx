@@ -11,6 +11,8 @@ export type IconName =
     | 'downAngle'
     | 'user'
     | 'done'
+    | 'heart'
+    | 'logout'
     | 'bookmark';
 
 interface Props extends SVGProps<SVGSVGElement> {

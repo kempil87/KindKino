@@ -1,29 +1,48 @@
-import React from 'react';
+import {useId} from 'react';
 
+import {useUnit} from 'effector-react/scope';
 import {
   FormProvider,
   useForm,
 } from 'react-hook-form';
 
-import { RULES } from '~/shared/constants/rules';
+import {RULES} from '~/shared/constants/rules';
+import {login} from '~/shared/models/auth';
+import {hideModal} from '~/shared/models/modal';
+import {updateProfile} from '~/shared/models/profile';
+import {showAlert} from '~/shared/utils/show-alert';
 
-import { Button } from '~/components/button/button';
-import { Input } from '~/components/input/input';
-import { Modal } from '~/components/modal/modal';
+import {Button} from '~/components/button/button';
+import {Input} from '~/components/input/input';
+import {Modal} from '~/components/modal/modal';
 
 interface FormProps {
-  email: string;
-  password: string;
+    email: string;
+    password: string;
 }
-export const AuthModal = () => {
-  const methods = useForm<FormProps>();
 
-  const auth = (data: FormProps) => {
-    data.email;
+export const AuthModal = () => {
+  const id = useId();
+  const methods = useForm<FormProps>({
+    defaultValues:{email:'testkindkino@mail.ru'}
+  });
+  const {loginFn, updateProfileFn,hideModalFn} = useUnit({
+    hideModalFn: hideModal,
+    loginFn: login,
+    updateProfileFn: updateProfile
+  });
+
+  const auth = ({email}: FormProps) => {
+    loginFn(String(Math.floor(Date.now() / 1000)));
+    updateProfileFn({email, id});
+    showAlert({message:'Успешно авторизованы!'});
+
+    onClose();
   };
 
   const onClose = () => {
     methods.reset();
+    hideModalFn();
   };
 
   return (

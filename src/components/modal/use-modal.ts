@@ -2,7 +2,7 @@ import { useRef } from 'react';
 
 import { useUnit} from 'effector-react/scope';
 
-import {$modal, hideModal, ModalName} from '~/shared/store/modal';
+import {$modal, hideModal, ModalName} from '~/shared/models/modal';
 
 export interface ModalProps {
   name: ModalName;
