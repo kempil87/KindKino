@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
-import { ValueProps } from "~/components/select/select";
+import { ValueProps } from '~/components/select/select';
 
 export type Props = ValueProps;
 interface TransitionOptions {

@@ -1,34 +1,30 @@
-import React, { useRef } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRef } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { useQuery } from '@tanstack/react-query';
-import cc from "classcat";
+import cc from 'classcat';
 
-import { AppLoader } from '~/components/app-loader/app-loader';
-import { Breadcrumbs } from "~/components/breadcrumbs/breadcrumbs";
-
-import { MainLayout } from '~/layout/MainLayout/main-layout';
 import { fetchFilms } from '~/shared/api/films/films';
 import { fetchStaff } from '~/shared/api/staff/staff';
-import { ROUTES } from "~/shared/constants/routes-links";
+import { ROUTES } from '~/shared/constants/routes-links';
 import { convertTime } from '~/shared/helpers/convert-time';
-import { uppercaseFirstLetter } from "~/shared/helpers/uppercase-first-letter";
+import { uppercaseFirstLetter } from '~/shared/helpers/uppercase-first-letter';
+
+import { AppLoader } from '~/components/app-loader/app-loader';
+import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
+import {MainLayout} from '~/layout/main-layout/main-layout';
 
 export default function Page() {
   const {
     query: { id },
   } = useRouter();
   const descriptionRef = useRef<HTMLParagraphElement>(null);
-  const isDescButtonVisible =
-    descriptionRef.current &&
-    descriptionRef.current?.getBoundingClientRect()?.height > 73;
 
-  console.log(isDescButtonVisible);
   const filmQuery = useQuery({
     enabled: !!id,
     queryFn: () => fetchFilms.view({ id: id as string }),
-    queryKey: ["film-view", id],
+    queryKey: ['film-view', id],
   });
 
   const filmStaffQuery = useQuery({
@@ -144,7 +140,7 @@ export default function Page() {
                     className="underline-offset-3 whitespace-nowrap underline transition-all hover:text-primary"
                     href={ROUTES.staff(String(staffId))}
                   >
-                    {nameRu} {array.length !== index + 1 && ", "}
+                    {nameRu} {array.length !== index + 1 && ', '}
                   </Link>
                 ))}
               </div>

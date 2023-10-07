@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useKeenSlider } from "keen-slider/react";
+import { useKeenSlider } from 'keen-slider/react';
 
 import { fetchFilms } from '~/shared/api/films/films';
 

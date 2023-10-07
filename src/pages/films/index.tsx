@@ -1,31 +1,30 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable effector/mandatory-scope-binding */
+import { useEffect, useState } from 'react';
 
-import cc from "classcat";
-import { useUnit } from "effector-react";
-import { FormProvider, useForm } from "react-hook-form";
-import Skeleton from "react-loading-skeleton";
+import cc from 'classcat';
+import { useUnit } from 'effector-react/scope';
+import { FormProvider, useForm } from 'react-hook-form';
+import Skeleton from 'react-loading-skeleton';
 
-import { Breadcrumbs } from "~/components/breadcrumbs/breadcrumbs";
-import { Button } from '~/components/button/button';
-import { FilmCard } from "~/components/film-card/film-card";
-import { Select, SelectOption } from "~/components/select/select";
-
-import { MainLayout } from "~/layout/MainLayout/main-layout";
 import { fetchFilms } from '~/shared/api/films/films';
 import {
   prepareSelectCountries,
   prepareSelectGenres,
 } from '~/shared/helpers/prepare-select-data';
-import { useQueriesData } from "~/shared/hooks/use-queries-data/use-queries-data";
+import { useQueriesData } from '~/shared/hooks/use-queries-data/use-queries-data';
 import { useUrlParams } from '~/shared/hooks/use-url-params/use-url-params';
 import {
-  $filmList,
-  $filmListLoading,
-  filmListApi,
-  filmListLoadingApi,
-} from "~/shared/store/film-list";
+  $filmList, updateFilmList,
+} from '~/shared/store/film-list';
 import { $selectStore, resetSelect, updateSelect } from '~/shared/store/select';
+import {ApiFilmsAll} from '~/shared/types/api/film/film';
 import { FilterCountry, FilterGenre } from '~/shared/types/api/filter/filter';
+
+import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
+import { Button } from '~/components/button/button';
+import { FilmCard } from '~/components/film-card/film-card';
+import { Select, SelectOption } from '~/components/select/select';
+import { MainLayout } from '~/layout/main-layout/main-layout';
 
 interface FormProps {
   countries: SelectOption[];
@@ -62,17 +61,17 @@ const getDefaultCountriesValues = (list: FilterCountry[], find: string) => {
 
 export default function Page() {
   const {
-    filmListLoading,
     handleUpdateSelect,
     handleResetSelect,
-    selectStore,
+    selectStoreModel,
+    updateFilmListFn,
     filmList,
   } = useUnit({
     filmList: $filmList,
-    filmListLoading: $filmListLoading,
     handleResetSelect: resetSelect,
     handleUpdateSelect: updateSelect,
-    selectStore: $selectStore,
+    selectStoreModel: $selectStore,
+    updateFilmListFn: updateFilmList,
   });
   const { updateUrlParams, queryParams, resetUrl } = useUrlParams();
 
@@ -80,9 +79,10 @@ export default function Page() {
 
   const methods = useForm<FormProps>();
 
-  const resetButtonVisible = !!Object.keys(selectStore).length;
+  const resetButtonVisible = !!Object.keys(selectStoreModel).length;
 
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
 
   const filtersUpdate = async (name: string, options: SelectOption[]) => {
     const values = options.map((i) => i.value);
@@ -91,30 +91,28 @@ export default function Page() {
     handleUpdateSelect({ name, value: values[0] });
   };
 
-  const getFilms = async () => {
-    const { items } = await fetchFilms.all({
-      countries: selectStore['countries'],
-      genres: selectStore['genres'],
-      order: 'NUM_VOTE',
-      type: "FILM",
-    });
+  const fetchParams:ApiFilmsAll['req'] = {
+    // countries: selectStoreModel['countries'],
+    // genres: selectStoreModel['genres'],
+    order: 'NUM_VOTE',
+    page,
+    type: 'FILM'
+  };
 
-    filmListApi.set(items);
-    filmListLoadingApi.off();
+  const getFilms = async () => {
+    const { items } = await fetchFilms.all(fetchParams);
+
+    updateFilmListFn(items);
+    setIsLoading(false);
   };
 
   const getMore = async () => {
-    const { items } = await fetchFilms.all({
-      countries: selectStore['countries'],
-      genres: selectStore['genres'],
-      order: "NUM_VOTE",
-      page: page + 1,
-      type: 'FILM',
-    });
+    const { items } = await fetchFilms.all(fetchParams);
 
     setPage((p) => p + 1);
 
-    filmListApi.update(items);
+    updateFilmListFn(items);
+    setIsLoading(false);
   };
 
   const resetFilters = async () => {
@@ -125,7 +123,7 @@ export default function Page() {
 
   useEffect(() => {
     getFilms();
-  }, [selectStore]);
+  }, [selectStoreModel]);
 
   useEffect(() => {
     if (queryParams.genres && queryParams.countries) {
@@ -138,8 +136,8 @@ export default function Page() {
         queryParams.genres as string
       );
 
-      methods.setValue('countries', countries);
-      methods.setValue('genres', genres);
+      countries && methods.setValue('countries', countries);
+      genres && methods.setValue('genres', genres);
     }
   }, [queryParams, filters, methods]);
 
@@ -173,8 +171,8 @@ export default function Page() {
 
               <Button
                 className={cc([
-                  "invisible opacity-0",
-                  { "!visible !opacity-100": resetButtonVisible },
+                  'invisible opacity-0',
+                  { '!visible !opacity-100': resetButtonVisible },
                 ])}
                 onClick={resetFilters}
               >
@@ -182,45 +180,39 @@ export default function Page() {
               </Button>
             </div>
             <div className="grid w-full grid-cols-6 gap-8">
-              {filmListLoading ? (
-                <>
-                  {Array.from({ length: 16 }).map((_, key) => (
-                    <div key={key} className=" h-full gap-1">
-                      <Skeleton
-                        baseColor="#16171DFF"
-                        borderRadius={16}
-                        containerClassName="flex-1 !h-[130px] h-full"
-                        height={330}
-                        highlightColor="#101011"
-                      />
+              {isLoading ? (
+                Array.from({ length: 16 }).map((_, key) => (
+                  <div key={key} className=" h-full gap-1">
+                    <Skeleton
+                      baseColor="#16171DFF"
+                      borderRadius={16}
+                      containerClassName="flex-1 !h-[130px] h-full"
+                      height={330}
+                      highlightColor="#101011"
+                    />
 
-                      <Skeleton
-                        baseColor="#16171DFF"
-                        borderRadius={8}
-                        height={24}
-                        highlightColor="#101011"
-                      />
+                    <Skeleton
+                      baseColor="#16171DFF"
+                      borderRadius={8}
+                      height={24}
+                      highlightColor="#101011"
+                    />
 
-                      <Skeleton
-                        baseColor="#16171DFF"
-                        borderRadius={8}
-                        containerClassName="m-auto flex mt-1 justify-center  w-full"
-                        height={20}
-                        highlightColor="#101011"
-                        width="120px"
-                      />
-                    </div>
-                  ))}
-                </>
+                    <Skeleton
+                      baseColor="#16171DFF"
+                      borderRadius={8}
+                      containerClassName="m-auto flex mt-1 justify-center  w-full"
+                      height={20}
+                      highlightColor="#101011"
+                      width="120px"
+                    />
+                  </div>
+                ))
               ) : (
-                <>
-                  {filmList.map((el) => (
-                    <FilmCard {...el} key={el.kinopoiskId} />
-                  ))}
-                </>
+                filmList.map((el) => <FilmCard {...el} key={el.kinopoiskId} />)
               )}
             </div>
-            <Button onClick={getMore}>Показать еще</Button>
+            {!isLoading && <Button onClick={getMore}>Показать еще</Button>}
           </div>
         </div>
       </FormProvider>

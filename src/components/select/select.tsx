@@ -1,25 +1,27 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 
 import cc from 'classcat';
-import { Controller, useFormContext } from 'react-hook-form';
-import { useOutsideClick } from "rooks";
+import {Controller, useFormContext} from 'react-hook-form';
+import {useOutsideClick} from 'rooks';
 
-import { Icon } from "~/components/icon/icon";
+import {Icon} from '~/components/icon/icon';
 
 export interface SelectOption {
-  label: string;
-  value: string | number;
+    label: string;
+    value: string | number;
 }
+
 export interface ValueProps extends Pick<SelectOption, 'value'> {
-  name: string;
+    name: string;
 }
+
 export interface SelectProps {
-  multiple: boolean;
-  name: string;
-  options: SelectOption[];
-  handleChange?: (name: string, options: SelectOption[]) => void;
-  notFoundText?: string;
-  placeholder?: string;
+    multiple: boolean;
+    name: string;
+    options: SelectOption[];
+    handleChange?: (name: string, options: SelectOption[]) => void;
+    notFoundText?: string;
+    placeholder?: string;
 }
 
 export const Select = ({
@@ -28,9 +30,9 @@ export const Select = ({
   handleChange,
   placeholder,
   multiple,
-  notFoundText = "Ничего не найдено",
+  notFoundText = 'Ничего не найдено',
 }: SelectProps) => {
-  const { control, watch, setValue } = useFormContext();
+  const {control} = useFormContext();
   const ref = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const [isMenuBVisible, setIsMenuVisible] = useState(false);
@@ -42,20 +44,20 @@ export const Select = ({
       return;
     }
     if (menuRef.current && ref.current) {
-      menuRef.current.classList.remove("translate-y-6");
-      menuRef.current.classList.remove("opacity-0");
-      menuRef.current.classList.remove("invisible");
-      ref.current.classList.add("!border-primary");
+      menuRef.current.classList.remove('translate-y-6');
+      menuRef.current.classList.remove('opacity-0');
+      menuRef.current.classList.remove('invisible');
+      ref.current.classList.add('!border-primary');
       setIsMenuVisible(true);
     }
   };
 
   const onBlur = () => {
     if (menuRef.current && ref.current) {
-      menuRef.current.classList.add("translate-y-6");
-      menuRef.current.classList.add("opacity-0");
-      menuRef.current.classList.add("invisible");
-      ref.current.classList.remove("!border-primary");
+      menuRef.current.classList.add('translate-y-6');
+      menuRef.current.classList.add('opacity-0');
+      menuRef.current.classList.add('invisible');
+      ref.current.classList.remove('!border-primary');
       setIsMenuVisible(false);
     }
   };
@@ -70,7 +72,7 @@ export const Select = ({
       <Controller
         control={control}
         name={name}
-        render={({ field: { value, onChange } }) => {
+        render={({field: {value, onChange}}) => {
           const selectedList = value?.map((i: SelectOption) => i.label);
 
           const onSelectChange = (option: SelectOption) => {
@@ -109,19 +111,19 @@ export const Select = ({
               >
                 <div
                   className={cc([
-                    "relative truncate px-5 py-1 text-white/60",
-                    { "!text-white": selectedList?.length },
+                    'relative truncate px-5 py-1 text-white/60',
+                    {'!text-white': selectedList?.length},
                   ])}
                 >
-                  {selectedList?.join(', ') || placeholder || ""}
+                  {selectedList?.join(', ') || placeholder || ''}
                 </div>
 
                 <Icon
                   name="downAngle"
                   size={24}
                   className={cc([
-                    "absolute right-3 -rotate-180 text-white/60 transition-all",
-                    { "!rotate-0": isMenuBVisible },
+                    'absolute right-3 -rotate-180 text-white/60 transition-all',
+                    {'!rotate-0': isMenuBVisible},
                   ])}
                 />
               </button>
@@ -130,23 +132,23 @@ export const Select = ({
                 className="invisible absolute top-[120%] z-40 max-h-80 w-full translate-y-6 space-y-2 overflow-y-auto rounded-md border border-border bg-dark px-3 py-2 opacity-0 transition-all"
               >
                 {options?.length ? (
-                  options.map((option, index) => {
+                  options.map((option) => {
                     const isSelected = !!value?.find(
-                      (el) => el.value === option.value
+                      (el: SelectOption) => el.value === option.value
                     );
 
                     return (
                       <button
                         key={option.value}
                         className={cc([
-                          "relative flex  w-full cursor-pointer items-center justify-between rounded-md px-3 py-1 text-sm text-white/60 transition-all hover:text-white",
-                          { "!text-white": isSelected },
+                          'relative flex  w-full cursor-pointer items-center justify-between rounded-md px-3 py-1 text-sm text-white/60 transition-all hover:text-white',
+                          {'!text-white': isSelected},
                         ])}
                         onClick={() => onSelectChange(option)}
                       >
                         {option.label}
 
-                        {isSelected && <Icon name="done" />}
+                        {isSelected && <Icon name="done"/>}
                       </button>
                     );
                   })

@@ -1,17 +1,17 @@
+import {useMemo} from 'react';
 import type { AppProps } from 'next/app';
 
 import { QueryClient } from '@tanstack/query-core';
 import { QueryClientProvider } from '@tanstack/react-query';
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
+import {fork, Scope, serialize} from 'effector';
+import {Provider} from 'effector-react/scope';
 import { Toaster } from 'react-hot-toast';
 
-import { AppLoader } from "~/components/app-loader/app-loader";
-
 import './../styles/globals.css';
-import 'keen-slider/keen-slider.min.css';
-import "react-loading-skeleton/dist/skeleton.css";
 
 import 'dayjs/locale/ru';
+import { AppLoader } from '~/components/app-loader/app-loader';
 
 dayjs.locale('ru-RU');
 export const queryClient = new QueryClient({
@@ -27,13 +27,33 @@ export const queryClient = new QueryClient({
   },
 });
 
-export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <Component {...pageProps} />
+let clientScope: Scope;
 
-      <Toaster position="top-right" />
-      <AppLoader />
-    </QueryClientProvider>
+export default function App({ Component, pageProps }: AppProps) {
+
+  const scope = useMemo(
+    () =>
+      fork({
+        values: {
+          ...(clientScope && serialize(clientScope)),
+          ...pageProps?.initialState,
+        },
+      }),
+    [],
+  );
+
+  if (typeof window !== 'undefined') {
+    clientScope = scope;
+  }
+
+  return (
+    <Provider value={scope}>
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+
+        <Toaster position="top-right" />
+        <AppLoader />
+      </QueryClientProvider>
+    </Provider>
   );
 }

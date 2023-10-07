@@ -5,7 +5,7 @@ export const convertTime = (minutes: number) => {
   const hour = Math.floor(minutes / 60);
 
   const minutesStr = String(mm).padStart(2, '0');
-  const hourStr = String(hour).padStart(2, "0");
+  const hourStr = String(hour).padStart(2, '0');
 
   return `${hourStr}:${minutesStr}`;
 };

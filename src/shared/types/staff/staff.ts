@@ -1,4 +1,4 @@
-import { Film } from "~/shared/types/film/film";
+import { Film } from '~/shared/types/film/film';
 
 export interface FilmStaff {
   description: string;

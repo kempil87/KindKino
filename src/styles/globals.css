@@ -1,4 +1,6 @@
 @import url('./_app.css');
+@import url('keen-slider/keen-slider.min.css');
+@import url('react-loading-skeleton/dist/skeleton.css');
 
 @tailwind base;
 @tailwind components;

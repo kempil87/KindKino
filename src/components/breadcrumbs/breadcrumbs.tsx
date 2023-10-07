@@ -1,14 +1,17 @@
-import React, { Fragment } from 'react';
-import Link from "next/link";
+import { Fragment } from 'react';
+import Link from 'next/link';
+
+import { ROUTES } from '~/shared/constants/routes-links';
 
 import { Icon } from '~/components/icon/icon';
 
-import { ROUTES } from "~/shared/constants/routes-links";
+export type BreadcrumbProps = { label: string; path?: string }
+
 interface Props {
-  breadcrumbs: Array<{ label: string; path?: string }>;
+  breadcrumbs: BreadcrumbProps[];
 }
 export const Breadcrumbs = ({ breadcrumbs }: Props) => {
-  const initialLink = { label: "Главная", path: ROUTES.home };
+  const initialLink = { label: 'Главная', path: ROUTES.home };
 
   return (
     <ul className="flex items-center">

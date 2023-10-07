@@ -2,6 +2,7 @@
     @apply flex items-center justify-between py-1.5 z-[110] fixed top-0 left-0 right-0 w-full backdrop-blur-md
 }
 
+
 .burgerMenu {
     height: 2px;
     width: 38px;
@@ -36,6 +37,10 @@
 }
 
 .logo {
+    @apply pos-abs
+}
+
+.logo {
     font-size: 44px;
     display: flex;
     align-items: center;
@@ -54,7 +59,7 @@
 }
 
 .NavLink {
-    @apply transition-all hover:text-primary uppercase
+    @apply transition-all hover:text-primary uppercase max-xl:hidden
 }
 
 .NavLinkActive {

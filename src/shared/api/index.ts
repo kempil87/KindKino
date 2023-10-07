@@ -1,10 +1,13 @@
-import axios, { AxiosError, type AxiosRequestConfig } from 'axios';
+import axios, {AxiosError, type AxiosRequestConfig} from 'axios';
 
-import { appConfig } from '../../../appConfig';
+import {showAlert} from '~/shared/helpers/show-alert';
+
+import {appConfig} from '../../../app-config';
 
 interface ApiRequestProps extends AxiosRequestConfig {
-  v1?: boolean;
+    v1?: boolean;
 }
+
 export const apiRequest = async ({
   v1 = false,
   ...options
@@ -21,8 +24,8 @@ export const apiRequest = async ({
 
     return response.data;
   } catch (error) {
-    const { message } = error as AxiosError;
+    const {message} = error as AxiosError;
 
-    console.error(message);
+    showAlert({message, type: 'error'});
   }
 };

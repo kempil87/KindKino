@@ -45,33 +45,32 @@ export const Input = <Name extends FieldValues>({
 
         return (
           <div className={cc([formClassName, 'space-y-1.5'])}>
-            <label
-              className="w-fit cursor-pointer pl-3 text-sm font-normal"
-              htmlFor={id}
-            >
-              {label}
-            </label>
+            {label && (
+              <label
+                className="w-fit cursor-pointer pl-3 text-sm font-normal"
+                htmlFor={id}
+              >
+                {label}
+              </label>
+            )}
 
             <input
               autoComplete="current-password"
               id={id}
-              value={value || ""}
+              value={value || ''}
               onBlur={onBlur}
               onChange={onInputChange}
               {...props}
-              type={props.type || "text"}
+              type={props.type || 'text'}
               className={cc([
-                "w-full appearance-none rounded border border-solid border-border !bg-transparent px-3 py-2 text-white outline-none transition-all focus:border-primary ",
+                'w-full appearance-none rounded border border-solid border-border !bg-transparent px-3 py-2 text-white outline-none transition-all focus:border-primary ',
                 className,
-                {
-                  'border-red-500 placeholder:text-red-500 focus:border-red-500':
-                    error?.length,
-                },
+                {'border-red-500 placeholder:text-red-500 focus:border-red-500': error?.length},
               ])}
             />
 
             {error && (
-              <span className="mt-1 w-fit pl-3 text-sm text-red-500 transition-all">
+              <span className="mt-1 font-medium w-fit pl-3 text-sm text-red-500 transition-all">
                 {error}
               </span>
             )}

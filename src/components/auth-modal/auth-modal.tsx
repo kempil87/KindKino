@@ -1,24 +1,22 @@
-import React from "react";
+import React from 'react';
 
 import {
-  FieldValues,
   FormProvider,
-  SubmitHandler,
   useForm,
 } from 'react-hook-form';
 
-import { Button } from "~/components/button/button";
+import { RULES } from '~/shared/constants/rules';
+
+import { Button } from '~/components/button/button';
 import { Input } from '~/components/input/input';
 import { Modal } from '~/components/modal/modal';
-
-import { RULES } from '~/shared/constants/rules';
 
 interface FormProps {
   email: string;
   password: string;
 }
 export const AuthModal = () => {
-  const methods = useForm();
+  const methods = useForm<FormProps>();
 
   const auth = (data: FormProps) => {
     console.log(data);
@@ -31,24 +29,24 @@ export const AuthModal = () => {
   return (
     <FormProvider {...methods}>
       <Modal name="auth" title="Авторизация" onClose={onClose}>
-        <div className="w-[600px] space-y-3">
+        <div className="space-y-3 w-[600px]">
           <Input<FormProps>
             label="Почта"
             name="email"
             placeholder="Почта"
-            rules={RULES.auth.email}
+            rules={RULES.email}
           />
 
           <Input<FormProps>
             label="Пароль"
             name="password"
             placeholder="Пароль"
-            rules={RULES.auth.password}
+            rules={RULES.password}
           />
 
           <Button
             className="!mt-6 w-full"
-            onClick={methods.handleSubmit(auth as SubmitHandler<FieldValues>)}
+            onClick={methods.handleSubmit(auth)}
           >
             Войти
           </Button>

@@ -19,9 +19,7 @@
     "sort-keys-fix",
     "typescript-sort-keys",
     "simple-import-sort",
-    "unicorn",
-    "prettier",
-    "tailwindcss"
+    "unicorn"
   ],
   "extends": [
     "eslint:recommended",
@@ -34,12 +32,9 @@
     "plugin:import/recommended",
     "plugin:unicorn/recommended",
     "plugin:jsx-a11y/recommended",
-//    "plugin:tailwindcss/recommended",
-    "prettier",
     "next/core-web-vitals"
   ],
   "rules": {
-    "prettier/prettier": ["warn"],
     // react
     "react/react-in-jsx-scope": "off",
     "react/jsx-sort-props": [
@@ -118,6 +113,7 @@
       "as-needed"
     ],
     "no-unused-vars": "off",
+    "no-console": "warn",
     "no-multi-spaces": "error",
     "no-multiple-empty-lines": [
       "error",
@@ -147,6 +143,12 @@
     // unused-imports
     "unused-imports/no-unused-imports": "error",
     // unicorn
+    "unicorn/filename-case": [
+      "error",
+      {
+        "case": "kebabCase"
+      }
+    ],
     "unicorn/consistent-function-scoping": "off",
     "unicorn/prevent-abbreviations": "off",
     "unicorn/no-null": "off",
@@ -156,12 +158,12 @@
     "unicorn/prefer-module": "off",
     "unicorn/prefer-node-protocol": "off",
     // dirs
-//    "dirs/dirnames": [
-//      2,
-//      {
-//        "pattern": "^[\\[\\]a-z-]+$"
-//      }
-//    ],
+    "dirs/dirnames": [
+      2,
+      {
+        "pattern": "^[\\[\\]a-z-]+$"
+      }
+    ],
     // typescript
     "typescript-sort-keys/interface": [
       "error",
@@ -211,15 +213,13 @@
             "^@?\\w"
           ],
           [
-            "^(~/layouts)(/.*|$)",
-            "^(~/containers)(/.*|$)",
-            "^(~/components)(/.*|$)",
-            "^(~/ui)(/.*|$)"
+            "^(~/widgets)(/.*|$)",
+            "^(~/entities)(/.*|$)",
+            "^(~/features)(/.*|$)",
+            "^(~/shared)(/.*|$)"
           ],
           [
-            "^(~/constants)(/.*|$)",
-            "^(~/utils)(/.*|$)",
-            "^(~/hooks)(/.*|$)"
+            "^(~/mocks)(/.*|$)"
           ],
           [
             "^\\."

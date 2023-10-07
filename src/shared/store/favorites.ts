@@ -1,5 +1,5 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 
 interface Props {
   kinopoiskId: number;
@@ -25,9 +25,9 @@ export const addFavoriteFx = createEffect((payload: Props) => {
 
 export const removeFavoriteFx = createEffect(({ kinopoiskId }: Props) => {
   Cookies.set(
-    "favorites",
+    'favorites',
     JSON.stringify(
-      [...JSON.parse(Cookies.get("favorites") || "[]")].filter(
+      [...JSON.parse(Cookies.get('favorites') || '[]')].filter(
         (i) => i.kinopoiskId !== kinopoiskId
       )
     ),

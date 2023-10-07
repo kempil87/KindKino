@@ -1,6 +1,6 @@
 import { apiRequest } from '~/shared/api';
 import { ApiFetchCommonParams } from '~/shared/types/api';
-import { ApiFilmStaff, ApiStaff } from "~/shared/types/api/staff/staff";
+import { ApiFilmStaff, ApiStaff } from '~/shared/types/api/staff/staff';
 
 export const fetchStaff = {
   film: (params: ApiFetchCommonParams): ApiFilmStaff['res'] =>

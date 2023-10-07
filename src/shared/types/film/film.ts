@@ -1,4 +1,4 @@
-import { ApiPaginationResponse, PaginationParams } from "~/shared/types/api";
+import { ApiPaginationResponse, PaginationParams } from '~/shared/types/api';
 
 export interface FilmsRequest {
   type?: string;
@@ -10,6 +10,7 @@ export type FilmsResponse = ApiPaginationResponse<{
 export interface FilmsAllRequest extends Partial<PaginationParams> {
   countries?: string;
   genres?: string;
+  keyword?: string;
   order?: string;
   type?: string;
 }

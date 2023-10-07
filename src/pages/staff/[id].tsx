@@ -1,14 +1,14 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
-import { AppLoader } from "~/components/app-loader/app-loader";
-import { Breadcrumbs } from "~/components/breadcrumbs/breadcrumbs";
-
-import { MainLayout } from "~/layout/MainLayout/main-layout";
 import { fetchStaff } from '~/shared/api/staff/staff';
-import { DATE_FORMAT_FULL } from "~/shared/constants/formats";
+import { DATE_FORMAT_FULL } from '~/shared/constants/formats';
+
+import { AppLoader } from '~/components/app-loader/app-loader';
+import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
+import {MainLayout} from '~/layout/main-layout/main-layout';
 
 export default function Page() {
   const {
@@ -17,7 +17,7 @@ export default function Page() {
 
   const { isLoading, data } = useQuery({
     queryFn: () => fetchStaff.view({ id: id as string }),
-    queryKey: ["staff-view", id],
+    queryKey: ['staff-view', id],
   });
 
   const breadcrumbs = [

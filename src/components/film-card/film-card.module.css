@@ -4,7 +4,7 @@
 }
 
 .filmCard:hover img {
-    @apply brightness-[.2] transition-all
+    @apply brightness-[.2] transition-all scale-125
 }
 
 .filmCard:hover > div {

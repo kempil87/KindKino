@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 
-import { useStoreMap } from "effector-react";
+import { useStoreMap } from 'effector-react/scope';
 
-import { $modal, modalApi, ModalName } from "~/shared/store/modal";
+import { $modal, modalApi, ModalName } from '~/shared/store/modal';
 
 export interface ModalProps {
   name: ModalName;

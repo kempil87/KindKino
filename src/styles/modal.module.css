@@ -11,6 +11,6 @@
     @apply bg-dark p-10 rounded-2xl relative
 }
 
-.closeIcon {
-    @apply absolute top-5 right-5 cursor-pointer hover:opacity-70 transition-all
+.closeIconWrap {
+    @apply absolute top-5 right-5 hover:bg-white/60 transition-all size-10 flex-center rounded-md
 }

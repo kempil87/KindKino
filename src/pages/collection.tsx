@@ -1,8 +1,7 @@
 import style from '../styles/collection.module.css';
 
-import { MainLayout } from "~/layout/MainLayout/main-layout";
+import { MainLayout } from '~/layout/main-layout/main-layout';
 export default function Collection() {
-  const c = "";
 
   return (
     <MainLayout classNameContent="app-container my-6">

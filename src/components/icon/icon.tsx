@@ -4,6 +4,15 @@ import cc from 'classcat';
 
 import { ICONS } from '~/shared/constants/icons';
 
+export type IconName =
+    | 'arrowLeft'
+    | 'close'
+    | 'search'
+    | 'downAngle'
+    | 'user'
+    | 'done'
+    | 'bookmark';
+
 interface Props extends SVGProps<SVGSVGElement> {
   name: IconName;
   size?: number;
@@ -11,29 +20,21 @@ interface Props extends SVGProps<SVGSVGElement> {
 
 export const Icon = forwardRef<SVGSVGElement, Props>(
   ({ name, className, size, width = 16, height = 16, ...props }, parentRef) => {
-    const { data, viewBox } = ICONS[name];
+    const icon = ICONS[name];
 
     return (
       <svg
-        viewBox={viewBox || '0 0 512 512'}
+        viewBox={icon?.viewBox || '0 0 512 512'}
         {...props}
         ref={parentRef}
         className={cc(['fill-current', className])}
         height={size || height}
         width={size || width}
       >
-        {data}
+        {icon.data}
       </svg>
     );
   }
 );
 
 Icon.displayName = 'Icon';
-
-export type IconName =
-  | 'arrowLeft'
-  | 'close'
-  | 'search'
-  | 'downAngle'
-  | 'done'
-  | 'bookmark';

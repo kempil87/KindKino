@@ -1,16 +1,14 @@
-import React, { Fragment, PropsWithChildren } from "react";
+import { Fragment, PropsWithChildren } from 'react';
 import Head from 'next/head';
 
 import { useQuery } from '@tanstack/react-query';
-import cc from "classcat";
+import cc from 'classcat';
+
+import { fetchFilters } from '~/shared/api/filters/filters';
 
 import { AuthModal } from '~/components/auth-modal/auth-modal';
-import { SearchDrawer } from "~/components/search-drawer/search-drawer";
-
-import { Footer } from "~/layout/Footer/footer";
-import { Header } from "~/layout/Header/header";
-import { fetchFilters } from '~/shared/api/filters/filters';
-import { hideSearch } from '~/shared/store/search';
+import { Footer } from '~/layout/footer/footer';
+import { Header } from '~/layout/header/header';
 interface Props {
   classNameContent?: string;
   headProps?: {
@@ -22,7 +20,7 @@ export const MainLayout = ({
   children,
   headProps,
 }: PropsWithChildren<Props>) => {
-  useQuery({ queryFn: () => fetchFilters(), queryKey: ["filters"] });
+  useQuery({ queryFn: () => fetchFilters(), queryKey: ['filters'] });
 
   return (
     <Fragment>
@@ -32,13 +30,11 @@ export const MainLayout = ({
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <link href="/favicon.ico" rel="icon" />
       </Head>
-      <SearchDrawer />
 
       <Header />
 
       <div
-        className={cc(["pt-[78px]", classNameContent])}
-        onClick={() => hideSearch()}
+        className={cc(['pt-[78px]', classNameContent])}
       >
         {children}
       </div>

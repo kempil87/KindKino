@@ -1,23 +1,23 @@
 import toast from 'react-hot-toast';
 
-import { Icon, IconName } from "~/components/icon/icon";
-
 import { ALERT_TYPES } from '../constants/alert-types';
 
-import style from "../../styles/alert.module.css";
+import style from '../../styles/alert.module.css';
+
+import { Icon, IconName } from '~/components/icon/icon';
 interface Props {
   message?: string;
   type?: 'error' | 'success' | 'warning' | 'info';
 }
 
 export const showAlert = ({ message = '', type = 'success' }: Props) => {
-  const { icon, borderColor, iconColor } = ALERT_TYPES[type];
+  const { icon, iconColor } = ALERT_TYPES[type];
 
   toast.custom((t) => (
     <div
       className={`${
         t.visible ? style.animateEnter : style.animateLeave
-      } flex w-full max-w-xs rounded-xl border-2 border-primary !bg-dark bg-white px-3 py-3 shadow-lg`}
+      } flex w-full max-w-xs rounded-xl border-2 border-primary !bg-dark px-3 py-3 shadow-lg`}
     >
       <div className="flex flex-1">
         <div
@@ -34,7 +34,7 @@ export const showAlert = ({ message = '', type = 'success' }: Props) => {
         </div>
 
         <div className="flex-1 px-4">
-          <p className="text-sm text-white/70">{message || ""}</p>
+          <p className="text-sm text-white/70">{message || ''}</p>
         </div>
       </div>
     </div>
