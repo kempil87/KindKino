@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 
-import { useStoreMap } from 'effector-react/scope';
+import { useUnit} from 'effector-react/scope';
 
-import { $modal, modalApi, ModalName } from '~/shared/store/modal';
+import {$modal, hideModal, ModalName} from '~/shared/store/modal';
 
 export interface ModalProps {
   name: ModalName;
@@ -11,11 +11,16 @@ export interface ModalProps {
 }
 
 export const useModal = ({ name, onClose }: ModalProps) => {
-  const isVisible = useStoreMap($modal, (s) => s === name);
+  const {hideModalFn,modalModel} = useUnit({
+    hideModalFn:hideModal,
+    modalModel:$modal
+  });
   const modalRef = useRef<HTMLDivElement | null>(null);
 
+  const isVisible = modalModel === name;
+
   const onHide = () => {
-    modalApi.hide();
+    hideModalFn();
     onClose?.();
   };
 

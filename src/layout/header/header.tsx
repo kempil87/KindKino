@@ -3,12 +3,12 @@ import Link from 'next/link';
 import {useRouter} from 'next/router';
 
 import cc from 'classcat';
-import {useUnit} from 'effector-react/effector-react.umd';
+import {useUnit} from 'effector-react/scope';
 
 import {NAV_LINKS} from '~/shared/constants/nav-links';
 import {ROUTES} from '~/shared/constants/routes-links';
 import {$menu, toggleMenu} from '~/shared/store/menu';
-import {modalApi} from '~/shared/store/modal';
+import {showModal} from '~/shared/store/modal';
 
 import style from '../../styles/header.module.css';
 
@@ -19,8 +19,9 @@ import {SearchDrawer} from '~/components/search-drawer/search-drawer';
 export const Header = () => {
   const {pathname} = useRouter();
 
-  const { $menuModel, toggleMenuFn} = useUnit({
+  const { $menuModel, toggleMenuFn,showModalFn} = useUnit({
     $menuModel: $menu,
+    showModalFn: showModal,
     toggleMenuFn: toggleMenu,
   });
 
@@ -60,7 +61,7 @@ export const Header = () => {
         <Icon
           className={style.search}
           name="user"
-          onClick={() => modalApi.show('auth')}
+          onClick={() => showModalFn('auth')}
         />
       </nav>
     </div>

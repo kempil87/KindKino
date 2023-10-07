@@ -1,9 +1,9 @@
-import { createApi, createStore } from 'effector';
+import { createEvent, createStore} from 'effector';
 
 export type ModalName = 'auth';
-export const $modal = createStore<ModalName | null>(null);
 
-export const modalApi = createApi($modal, {
-  hide: () => null,
-  show: (_, payload: ModalName) => payload,
-});
+export const showModal = createEvent<ModalName>();
+export const hideModal = createEvent();
+export const $modal = createStore<ModalName | null>(null)
+  .on(showModal ,(_,name) => name)
+  .reset(hideModal);
