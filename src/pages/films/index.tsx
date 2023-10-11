@@ -10,15 +10,17 @@ import {fetchFilms} from '~/shared/api/films/films';
 import {useQueriesData} from '~/shared/hooks/use-queries-data/use-queries-data';
 import {useUrlParams} from '~/shared/hooks/use-url-params/use-url-params';
 import {
-  $filmList, updateFilmList,
+  $filmList, setFilmsList, updateFilmList,
 } from '~/shared/models/film-list';
 import {$selectStore, resetSelect, updateSelect} from '~/shared/models/select';
 import {ApiFilmsAll} from '~/shared/types/api/film/film';
-import {FilterCountry, FilterGenre} from '~/shared/types/api/filter/filter';
+import {FilterProps} from '~/shared/types/api/filter/filter';
+import {createYearOptions} from '~/shared/utils/create-year-options';
 import {
   prepareSelectCountries,
   prepareSelectGenres,
 } from '~/shared/utils/prepare-select-data';
+import {uppercaseFirstLetter} from '~/shared/utils/uppercase-first-letter';
 
 import {Breadcrumbs} from '~/components/breadcrumbs/breadcrumbs';
 import {Button} from '~/components/button/button';
@@ -29,34 +31,23 @@ import {MainLayout} from '~/layout/main-layout/main-layout';
 interface FormProps {
     countries: SelectOption[];
     genres: SelectOption[];
+    year: SelectOption[];
 }
 
-const getDefaultGenresValues = (list: FilterGenre[], find: string) => {
-  const result: FilterGenre[] = [];
-
-  if (list && !list.length && !find) return [];
-
-  list.map((el) => {
-    if (find?.split(', ').includes(String(el.id))) {
-      result.push(el);
+const getDefaultLabel = (name: string, value: string, filters: FilterProps): string => {
+  switch (name) {
+    case 'year' : {
+      return value;
     }
-  });
 
-  return prepareSelectGenres(result);
-};
-
-const getDefaultCountriesValues = (list: FilterCountry[], find: string) => {
-  const result: FilterCountry[] = [];
-
-  if (list && !list.length && !find) return [];
-
-  list.map((el) => {
-    if (find?.split(', ').includes(String(el.id))) {
-      result.push(el);
+    case 'genres' : {
+      return uppercaseFirstLetter(filters.genres.find(el => el.id === +value)?.genre || '');
     }
-  });
 
-  return prepareSelectCountries(result);
+    default : {
+      return uppercaseFirstLetter(filters.countries.find(el => el.id === +value)?.country || '') ;
+    }
+  }
 };
 
 export default function Page() {
@@ -65,45 +56,56 @@ export default function Page() {
     handleResetSelect,
     selectStoreModel,
     updateFilmListFn,
+    setFilmsListFn,
     filmList,
   } = useUnit({
     filmList: $filmList,
     handleResetSelect: resetSelect,
     handleUpdateSelect: updateSelect,
     selectStoreModel: $selectStore,
+    setFilmsListFn: setFilmsList,
     updateFilmListFn: updateFilmList,
   });
+
   const {updateUrlParams, queryParams, resetUrl} = useUrlParams();
 
   const {filters} = useQueriesData();
 
   const methods = useForm<FormProps>();
 
-  const resetButtonVisible = Object.values(methods.getValues()).some(Boolean);
+  const resetButtonVisible = Object.values(queryParams).some(Boolean);
 
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadButtonLoading, setLoadButtonIsLoading] = useState(false);
 
   const filtersUpdate = async (name: string, options: SelectOption[]) => {
     const values = options.map((i) => i.value);
 
-    await updateUrlParams([{name, value: values.join(', ')}]);
-    handleUpdateSelect({name, value: values[0]});
+    await updateUrlParams([{name, value: values.join('')}]);
+
+    handleUpdateSelect({name, value: values.join('')});
   };
 
   const fetchParams: ApiFilmsAll['req'] = {
-    // countries: selectStoreModel['countries'],
-    // genres: selectStoreModel['genres'],
     order: 'NUM_VOTE',
     page,
-    type: 'FILM'
+    type: 'FILM',
   };
 
-  const getFilms = async () => {
-    const {items} = await fetchFilms.all(fetchParams);
+  if (selectStoreModel) {
+    fetchParams.countries = selectStoreModel['countries'];
+    fetchParams.genres = selectStoreModel['genres'];
+    fetchParams.yearFrom = selectStoreModel['year'];
+    fetchParams.yearTo = selectStoreModel['year'];
+  }
 
-    updateFilmListFn(items);
+  const getFilms = async () => {
+    const {items,totalPages} = await fetchFilms.all(fetchParams);
+
+    setTotalPages(totalPages);
+    setFilmsListFn(items);
     setIsLoading(false);
   };
 
@@ -119,6 +121,7 @@ export default function Page() {
   };
 
   const resetFilters = async () => {
+    setPage(1);
     await resetUrl();
     methods.reset();
     handleResetSelect();
@@ -129,20 +132,18 @@ export default function Page() {
   }, [selectStoreModel]);
 
   useEffect(() => {
-    if (queryParams.genres && queryParams.countries) {
-      const countries = getDefaultCountriesValues(
-        filters?.countries || [],
-              queryParams.countries as string
-      );
-      const genres = getDefaultGenresValues(
-        filters?.genres || [],
-            queryParams.genres as string
-      );
+    const hasSearchParams = !!Object.values(queryParams).length;
 
-      countries && methods.setValue('countries', countries);
-      genres && methods.setValue('genres', genres);
+    if (hasSearchParams && filters) {
+      for (const [name, value] of Object.entries(queryParams)) {
+        handleUpdateSelect({name, value: value as string});
+        methods.setValue(name as keyof FormProps,
+          [{label: getDefaultLabel(name, value as string, filters), value: Number(value)}]
+        );
+      }
     }
-  }, [queryParams, filters, methods]);
+
+  }, [queryParams, filters]);
 
   return (
     <MainLayout>
@@ -156,7 +157,7 @@ export default function Page() {
             <div className="flex w-full items-center justify-between">
               <div className="grid w-full grid-cols-4 gap-3">
                 <Select
-                  multiple
+                  // multiple
                   handleChange={filtersUpdate}
                   name="countries"
                   options={prepareSelectCountries(filters?.countries) || []}
@@ -164,11 +165,17 @@ export default function Page() {
                 />
 
                 <Select
-                  multiple
                   handleChange={filtersUpdate}
                   name="genres"
                   options={prepareSelectGenres(filters?.genres) || []}
                   placeholder="Жанр"
+                />
+
+                <Select
+                  handleChange={filtersUpdate}
+                  name="year"
+                  options={createYearOptions()}
+                  placeholder="Год"
                 />
               </div>
 
@@ -179,7 +186,7 @@ export default function Page() {
                 ])}
                 onClick={resetFilters}
               >
-                  Сбросить фильтры
+                Сбросить фильтры
               </Button>
             </div>
             <div className="grid w-full grid-cols-6 gap-8">
@@ -212,10 +219,10 @@ export default function Page() {
                   </div>
                 ))
               ) : (
-                filmList.map((el) => <FilmCard {...el} key={el.kinopoiskId}/>)
+                filmList.map((el) => <FilmCard eyeVisible {...el} key={el.kinopoiskId}/>)
               )}
             </div>
-            {!isLoading && (
+            {!isLoading && totalPages !== page && (
               <Button
                 disabled={isLoadButtonLoading}
                 onClick={getMore}
@@ -226,6 +233,7 @@ export default function Page() {
           </div>
         </div>
       </FormProvider>
+
     </MainLayout>
   );
 }

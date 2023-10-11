@@ -16,10 +16,10 @@ export interface ValueProps extends Pick<SelectOption, 'value'> {
 }
 
 export interface SelectProps {
-    multiple: boolean;
     name: string;
     options: SelectOption[];
     handleChange?: (name: string, options: SelectOption[]) => void;
+    multiple?: boolean;
     notFoundText?: string;
     placeholder?: string;
 }

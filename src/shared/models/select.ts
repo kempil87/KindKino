@@ -1,11 +1,9 @@
 import { createEvent, createStore } from 'effector';
 
-import { ValueProps } from '~/components/select/select';
-
-export const updateSelect = createEvent<ValueProps>();
+export const updateSelect = createEvent<Record<string, string>>();
 export const resetSelect = createEvent();
 
-export const $selectStore = createStore<ValueProps>({name:'',value: ''})
+export const $selectStore = createStore<Record<string, string> | null>(null)
   .on(updateSelect, (state, { name, value }) => ({
     ...state,
     [name]: value,

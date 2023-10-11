@@ -13,6 +13,8 @@ export interface FilmsAllRequest extends Partial<PaginationParams> {
   keyword?: string;
   order?: string;
   type?: string;
+  yearFrom?: string;
+  yearTo?: string;
 }
 
 export interface FilmsAllResponse {

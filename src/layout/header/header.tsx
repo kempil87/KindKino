@@ -21,7 +21,7 @@ import {SearchDrawer} from '~/components/search-drawer/search-drawer';
 export const Header = () => {
   const {pathname} = useRouter();
 
-  const { $menuModel, toggleMenuFn,showModalFn,$profileModel} = useUnit({
+  const {showModalFn,$profileModel} = useUnit({
     $menuModel: $menu,
     $profileModel: $profile,
     showModalFn: showModal,
@@ -30,16 +30,22 @@ export const Header = () => {
 
   return (
     <div className={cc([style.header, 'app-container h-[78px]'])}>
-      <button
-        className="h-[12px] children:cursor-pointer w-[38px] transition-all hover:opacity-75"
-        onClick={() => toggleMenuFn()}
-      >
-        <div
-          className={cc([
-            style.burgerMenu,
-            {[style.burgerMenuActive]: $menuModel},
-          ])}
-        />
+      {/*<button*/}
+      {/*  className="h-[12px] children:cursor-pointer w-[38px] transition-all hover:opacity-75"*/}
+      {/*  onClick={() => toggleMenuFn()}*/}
+      {/*>*/}
+      {/*  <div*/}
+      {/*    className={cc([*/}
+      {/*      style.burgerMenu,*/}
+      {/*      {[style.burgerMenuActive]: $menuModel},*/}
+      {/*    ])}*/}
+      {/*  />*/}
+      {/*</button>*/}
+
+      <button>
+        <div />
+        <div />
+        <div />
       </button>
 
       <Logo path={ROUTES.home}/>

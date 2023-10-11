@@ -15,6 +15,7 @@ import { uppercaseFirstLetter } from '~/shared/utils/uppercase-first-letter';
 import { AppLoader } from '~/components/app-loader/app-loader';
 import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
 import {FilmCard} from '~/components/film-card/film-card';
+import {PersonPopover} from '~/components/person-popover/person-popover';
 import {Title} from '~/components/title/title';
 import {MainLayout} from '~/layout/main-layout/main-layout';
 
@@ -71,7 +72,7 @@ export default function Page() {
   return (
     <MainLayout headProps={{ title: filmQuery.data?.nameRu || '' }}>
       <img
-        className="app-container fixed right-0 top-0 z-[30] h-screen  object-cover blur-md brightness-75"
+        className="app-container fixed right-0 top-0 z-[30] h-screen object-cover blur-md"
         src={filmQuery.data?.posterUrl}
       />
 
@@ -86,26 +87,31 @@ export default function Page() {
               src={filmQuery.data?.posterUrl}
             />
 
-            <div className="primary-gradient absolute right-5 top-5 rounded-md p-2">
-              {filmQuery.data?.ratingAgeLimits.replace('age', '')}+
-            </div>
+            {filmQuery.data?.ratingAgeLimits && (
+              <div className="primary-gradient absolute right-5 top-5 rounded-md p-2">
+                {filmQuery.data?.ratingAgeLimits.replace('age', '')}+
+              </div>
+            )}
           </div>
 
           <div className="">
             <div className="flex  space-x-2">
-              <div className="flex items-center gap-3">
-                <div className="rounded-md bg-white px-2.5 py-0.5 font-medium text-black">
-                  {filmQuery.data?.ratingImdb}
+              {filmQuery.data?.ratingImdb && (
+                <div className="flex items-center gap-3">
+                  <div className="rounded-md bg-white px-2.5 py-0.5 font-medium text-black">
+                    {filmQuery.data?.ratingImdb}
+                  </div>
+                  <span className="text-sm font-normal">Imdb</span>
                 </div>
-                <span className="text-sm font-normal">Imdb</span>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="rounded-md bg-white px-2.5 py-0.5 font-medium text-black">
-                  {filmQuery.data?.ratingKinopoisk}
+              )}
+              {filmQuery.data?.ratingKinopoisk && (
+                <div className="flex items-center gap-3">
+                  <div className="rounded-md bg-white px-2.5 py-0.5 font-medium text-black">
+                    {filmQuery.data?.ratingKinopoisk}
+                  </div>
+                  <span className="text-sm font-normal">Кинопоиск</span>
                 </div>
-                <span className="text-sm font-normal">Кинопоиск</span>
-              </div>
+              )}
             </div>
             <h2 className="my-6 text-[34px]">
               {filmQuery.data?.nameRu} ({filmQuery.data?.year})
@@ -133,14 +139,15 @@ export default function Page() {
             <div className="flex items-center gap-5">
               <div className="w-20 text-white/60">Режиссёр</div>
               <div className="flex space-x-1">
-                {directors?.map(({ nameRu, staffId }, index, array) => (
-                  <Link
-                    key={staffId}
-                    className="underline-offset-3 whitespace-nowrap underline transition-all hover:text-primary"
-                    href={ROUTES.staff(String(staffId))}
-                  >
-                    {nameRu} {array.length !== index + 1 && ', '}
-                  </Link>
+                {directors?.map((person, index, array) => (
+                  <PersonPopover key={person.staffId} {...person}>
+                    <Link
+                      className="underline-offset-3 whitespace-nowrap underline transition-all hover:text-primary"
+                      href={ROUTES.staff(String(person.staffId))}
+                    >
+                      {person.nameRu} {array.length !== index + 1 && ', '}
+                    </Link>
+                  </PersonPopover>
                 ))}
               </div>
             </div>
@@ -150,14 +157,15 @@ export default function Page() {
             <div className="flex items-center gap-5">
               <div className="w-20 text-white/60">Актёры</div>
               <div className="flex space-x-1">
-                {actors?.map(({ nameRu, staffId }, index, array) => (
-                  <Link
-                    key={staffId}
-                    className="underline-offset-3 whitespace-nowrap underline transition-all hover:text-primary"
-                    href={ROUTES.staff(String(staffId))}
-                  >
-                    {nameRu} {array.length !== index + 1 && ', '}
-                  </Link>
+                {actors?.map((person, index, array) => (
+                  <PersonPopover key={person.staffId} {...person}>
+                    <Link
+                      className="underline-offset-3 whitespace-nowrap underline transition-all hover:text-primary"
+                      href={ROUTES.staff(String(person.staffId))}
+                    >
+                      {person.nameRu} {array.length !== index + 1 && ', '}
+                    </Link>
+                  </PersonPopover>
                 ))}
               </div>
             </div>

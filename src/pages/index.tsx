@@ -11,6 +11,7 @@ import {ROUTES} from '~/shared/constants/routes-links';
 import {FilmCard} from '~/components/film-card/film-card';
 import {Icon} from '~/components/icon/icon';
 import {MainSlider} from '~/components/main-slider/main-slider';
+import {Title} from '~/components/title/title';
 import {MainLayout} from '~/layout/main-layout/main-layout';
 
 export default function Home() {
@@ -30,7 +31,7 @@ export default function Home() {
       </div>
 
       <div className="app-container relative my-14">
-        <h4 className='text-3xl font-medium mb-6'>Топ ожидающих фильмов</h4>
+        <Title className='mb-6' path={ROUTES.films}>Топ ожидающих фильмов</Title>
 
         <div ref={sliderRef} className='keen-slider'>
           {isLoading ? (

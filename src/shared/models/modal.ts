@@ -1,6 +1,6 @@
 import { createEvent, createStore} from 'effector';
 
-export type ModalName = 'auth';
+export type ModalName = 'auth' | 'confirm';
 
 export const showModal = createEvent<ModalName>();
 export const hideModal = createEvent();

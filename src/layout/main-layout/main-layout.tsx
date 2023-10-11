@@ -1,13 +1,16 @@
 import { Fragment, PropsWithChildren } from 'react';
 import Head from 'next/head';
 
-import { useQuery } from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import cc from 'classcat';
 
-import { fetchFilters } from '~/shared/api/filters/filters';
+import {fetchFilters} from '~/shared/api/filters/filters';
 import {useAuthorized} from '~/shared/hooks/use-authorized/use-authorized';
 
+import {Anchor} from '~/components/anchor/anchor';
 import { AuthModal } from '~/components/auth-modal/auth-modal';
+import {ConfirmModal} from '~/components/confirm-modal/confirm-modal';
+import {CookieConfirm} from '~/components/cookie-confirm/cookie-confirm';
 import { Footer } from '~/layout/footer/footer';
 import { Header } from '~/layout/header/header';
 interface Props {
@@ -41,8 +44,12 @@ export const MainLayout = ({
         {children}
       </div>
 
-      <AuthModal />
       <Footer />
+
+      <AuthModal />
+      <Anchor />
+      <CookieConfirm />
+      <ConfirmModal />
     </Fragment>
   );
 };

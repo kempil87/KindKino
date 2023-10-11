@@ -1,27 +1,31 @@
-import React, { forwardRef, SVGProps } from 'react';
+import React, {forwardRef, SVGProps} from 'react';
 
 import cc from 'classcat';
 
-import { ICONS } from '~/shared/constants/icons';
+import {ICONS} from '~/shared/constants/icons';
 
 export type IconName =
     | 'arrowLeft'
+    | 'star'
     | 'close'
     | 'search'
     | 'downAngle'
     | 'user'
     | 'done'
+    | 'eye'
     | 'heart'
+    | 'masks'
     | 'logout'
+    | 'arrow_long'
     | 'bookmark';
 
 interface Props extends SVGProps<SVGSVGElement> {
-  name: IconName;
-  size?: number;
+    name: IconName;
+    size?: number;
 }
 
 export const Icon = forwardRef<SVGSVGElement, Props>(
-  ({ name, className, size, width = 16, height = 16, ...props }, parentRef) => {
+  ({name, className, size, width = 16, height = 16, ...props}, parentRef) => {
     const icon = ICONS[name];
 
     return (

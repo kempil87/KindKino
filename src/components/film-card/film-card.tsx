@@ -7,11 +7,13 @@ import {useUnit} from 'effector-react/scope';
 
 import {ROUTES} from '~/shared/constants/routes-links';
 import {useAuthorized} from '~/shared/hooks/use-authorized/use-authorized';
+import {showConfirm} from '~/shared/models/confirm-modal';
 import {
   $favorites,
   removeFavorites,
   updateFavorites,
 } from '~/shared/models/favorites';
+import {addNotOffer} from '~/shared/models/film-list';
 import {showModal} from '~/shared/models/modal';
 import {Film} from '~/shared/types/film/film';
 import {showAlert} from '~/shared/utils/show-alert';
@@ -22,13 +24,20 @@ import imagePlug from '../../../public/images/images.jpeg';
 import style from './film-card.module.css';
 
 import {Icon} from '~/components/icon/icon';
+import {Tooltip} from '~/components/tooltip/tooltip';
 
-export const FilmCard = (props: Film) => {
+interface Props extends Film{
+  eyeVisible?:boolean
+}
+
+export const FilmCard = (props: Props) => {
   const isAuthorized = useAuthorized();
   const [imageLoading, setImageLoading] = useState(true);
-  const {$favoritesModel,showModalFn, updateFavoritesFn, removeFavoritesFn} = useUnit({
+  const {$favoritesModel,showModalFn,addNotOfferFn, updateFavoritesFn,showConfirmFn, removeFavoritesFn} = useUnit({
     $favoritesModel: $favorites,
+    addNotOfferFn: addNotOffer,
     removeFavoritesFn: removeFavorites,
+    showConfirmFn: showConfirm,
     showModalFn: showModal,
     updateFavoritesFn: updateFavorites
   });
@@ -36,6 +45,37 @@ export const FilmCard = (props: Film) => {
   const isFavorite = $favoritesModel
     .flatMap((i) => [i.kinopoiskId])
     .includes(props.kinopoiskId);
+
+  const onNotOffer = (e: MouseEvent) => {
+    e.preventDefault();
+    const {kinopoiskId, nameRu} = props;
+
+    const message = `Фильм ${nameRu} заблокирован, убрать заблокированные фильмы можно из меню профиля`;
+
+    if (!isAuthorized) {
+      showModalFn('auth');
+
+      return;
+    }
+
+    if (isFavorite) {
+      showModalFn('confirm');
+      showConfirmFn({
+        onConfirm:() => {
+          addNotOfferFn(kinopoiskId);
+          showAlert({message});
+        },
+        subtitle:'Убрать из избранного и больше не предлагать',
+        successButtonText:'Убрать',
+        title:'Фильм добавлен в избранное'
+      });
+
+      return;
+    }
+
+    addNotOfferFn(kinopoiskId);
+    showAlert({message});
+  };
 
   const handleAddFavorites = (e: MouseEvent) => {
     e.preventDefault();
@@ -69,7 +109,7 @@ export const FilmCard = (props: Film) => {
   return (
     <Link
       className={style.filmCard}
-      href={ROUTES.film(String(props.kinopoiskId))}
+      href={ROUTES.film(String(props.kinopoiskId || props.filmId))}
     >
       <div className='overflow-hidden rounded-2xl'>
         <img
@@ -114,18 +154,36 @@ export const FilmCard = (props: Film) => {
           )}
         </div>
 
-        {props.kinopoiskId && (
-          <Icon
-            name="bookmark"
-            size={23}
-            className={cc([
-              {'text-primary': isFavorite},
-              'cursor-pointer transition-all hover:text-primary',
-            ])}
-            onClick={handleAddFavorites}
-          />
-        )}
+        <div className='flex-center space-y-2 flex-col'>
+          {props.kinopoiskId && (
+            <Tooltip text={isFavorite ? 'Убрать из избранного' :'Буду смотреть'}>
+              <Icon
+                name="bookmark"
+                size={23}
+                className={cc([
+                  {'text-primary': isFavorite},
+                  'cursor-pointer transition-all hover:text-primary',
+                ])}
+                onClick={handleAddFavorites}
+              />
+            </Tooltip>
 
+          )}
+
+          {props.eyeVisible && (
+            <Tooltip text='Не предлагать такое'>
+              <Icon
+                name="eye"
+                size={20}
+                className={cc([
+                  'cursor-pointer transition-all hover:text-red-400',
+                ])}
+                onClick={onNotOffer}
+              />
+            </Tooltip>
+          )}
+
+        </div>
       </div>
 
       <div
