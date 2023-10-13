@@ -77,7 +77,10 @@
     transition-duration: 150ms;
 }
 
-
 .collectionItem span {
-    @apply bg-dark rounded-2xl px-6 py-1 text-white font-medium uppercase
+    @apply bg-dark rounded-2xl px-6 py-1 text-white font-medium uppercase text-center text-sm w-10/12
+}
+
+.collectionItem p {
+    @apply text-white/50 text-center text-xs
 }

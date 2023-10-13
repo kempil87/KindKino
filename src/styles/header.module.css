@@ -1,39 +1,9 @@
 .header {
-    @apply flex items-center justify-between py-1.5 z-[110] fixed top-0 left-0 right-0 w-full backdrop-blur-md
+    @apply flex items-center justify-end py-1.5 z-[110] fixed top-0 left-0 right-0 w-full transition-all
 }
 
-
-.burgerMenu {
-    height: 2px;
-    width: 38px;
-    background-color: white;
-    position: relative;
-}
-
-.burgerMenu {
-    @apply transition-all
-}
-
-.burgerMenu::before {
-    @apply transition-all
-}
-
-.burgerMenu::before {
-    content: '';
-    height: 2px;
-    width: 38px;
-    background-color: white;
-    position: absolute;
-    top: 12px;
-    left: 0;
-}
-
-.burgerMenuActive {
-    @apply rotate-45 transition-all rounded-[1px]
-}
-
-.burgerMenuActive::before {
-    @apply -rotate-90 transition-all -translate-y-3 rounded-[1px]
+.headerActive {
+    @apply bg-black/75 transition-all backdrop-blur-3xl custom-shadow
 }
 
 .logo {
@@ -59,13 +29,21 @@
 }
 
 .NavLink {
-    @apply transition-all hover:text-primary uppercase max-xl:hidden
+    @apply transition-all hover:bg-dark px-3 py-1 rounded-md uppercase max-xl:hidden text-[15px]
 }
 
 .NavLinkActive {
+    @apply bg-white px-3 py-1 rounded-md text-dark hover:bg-white
+}
+
+.headerButton {
+    @apply size-10 flex-center bg-dark rounded-xl transition-all
+}
+
+.headerButton:hover .search {
     @apply text-primary
 }
 
 .search {
-    @apply transition-all hover:text-primary cursor-pointer h-5 w-5
+    @apply transition-all cursor-pointer h-5 w-5
 }

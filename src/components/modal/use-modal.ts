@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import {ReactNode, useRef} from 'react';
 
 import { useUnit} from 'effector-react/scope';
 
@@ -6,6 +6,7 @@ import {$modal, hideModal, ModalName} from '~/shared/models/modal';
 
 export interface ModalProps {
   name: ModalName;
+  closeIcon?:boolean | ReactNode,
   onClose?: () => void;
   title?: string;
 }

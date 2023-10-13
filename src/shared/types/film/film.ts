@@ -35,6 +35,15 @@ export interface FilmViewResponse extends Film {
   slogan: string;
 }
 
+export interface FilmFactsResponse {
+  items: {
+    'spoiler': boolean,
+    'text': string,
+    'type': 'BLOOPER' | 'FACT'
+  }[];
+  total: number;
+}
+
 export interface Film {
   countries: FilmCountry[];
   filmId: number;
@@ -59,3 +68,4 @@ export interface FilmGenre {
 export interface FilmCountry {
   country: string;
 }
+

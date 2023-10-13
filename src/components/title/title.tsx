@@ -14,7 +14,7 @@ export const Title = ({children,path,...props}:PropsWithChildren<Props> ) => (
     {children}
 
     {path && (
-      <Link className='text-base group hover:text-primary children:transition-all transition-all flex space-x-3 items-center' href={path}>
+      <Link className='text-base group children:transition-all transition-all flex space-x-3 items-center' href={path}>
         <span>Смотреть все</span>
 
         <div className='group-hover:translate-x-2'>

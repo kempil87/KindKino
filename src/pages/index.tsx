@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Link from 'next/link';
 
 import {useQuery} from '@tanstack/react-query';
@@ -23,6 +23,10 @@ export default function Home() {
     queryFn: () => fetchFilms.top({type: 'TOP_AWAIT_FILMS'}),
     queryKey: ['top-await-list']
   });
+
+  useEffect(() => {
+    instanceRef?.current?.update();
+  }, [awaitListFilms, instanceRef]);
 
   return (
     <MainLayout>

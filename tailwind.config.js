@@ -5,7 +5,8 @@ const colors = {
     dark: 'rgb(22 23 29)',
     border: 'rgb(44 45 53)',
     grey: 'rgb(87,87,91)',
-    'card-bg': '#101011'
+    'card-bg': '#101011',
+    'light_dark': '#1e1e25'
 }
 
 module.exports = {
@@ -45,6 +46,11 @@ module.exports = {
                     alignItems: 'center',
                     justifyContent: 'center',
                 },
+                '.flex-between': {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                },
                 '.pos-abs': {
                     position: 'absolute',
                     top: '50%',
@@ -60,6 +66,12 @@ module.exports = {
                     position: 'absolute',
                     top: '50%',
                     transform: 'translateY(-50%)',
+                },
+                '.custom-shadow': {
+                   'box-shadow': '10px 10px 30px 0 #000',
+                },
+                '.custom-shadow-primary': {
+                    'box-shadow': '0 0 30px 0 #6623E8FF',
                 },
             });
         },

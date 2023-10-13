@@ -1,13 +1,14 @@
 /* eslint-disable effector/mandatory-scope-binding */
-import Link from 'next/link';
-import {useRouter} from 'next/router';
+
+import { useRef} from 'react';
 
 import cc from 'classcat';
 import {useUnit} from 'effector-react/scope';
 
 import {NAV_LINKS} from '~/shared/constants/nav-links';
 import {ROUTES} from '~/shared/constants/routes-links';
-import {$menu, toggleMenu} from '~/shared/models/menu';
+import {useScroll} from '~/shared/hooks/use-scroll/use-scroll';
+import { toggleMenu} from '~/shared/models/menu';
 import {showModal} from '~/shared/models/modal';
 import {$profile} from '~/shared/models/profile';
 
@@ -17,67 +18,59 @@ import {Icon} from '~/components/icon/icon';
 import {Logo} from '~/components/logo/logo';
 import {ProfileMenu} from '~/components/profile-menu/profile-menu';
 import {SearchDrawer} from '~/components/search-drawer/search-drawer';
+import {NavLink} from '~/layout/header/elems/nav-link';
 
 export const Header = () => {
-  const {pathname} = useRouter();
-
-  const {showModalFn,$profileModel} = useUnit({
-    $menuModel: $menu,
-    $profileModel: $profile,
+  const {showModalFn,profileModel} = useUnit({
+    profileModel: $profile,
     showModalFn: showModal,
     toggleMenuFn: toggleMenu,
   });
 
+  const headerRef = useRef<HTMLHeadElement>(null);
+
+  const callback = (top:number) => {
+    if (headerRef.current){
+      if (top) {
+        headerRef.current.classList.add(style.headerActive);
+
+        return;
+      }
+      headerRef.current.classList.remove(style.headerActive);
+    }
+  };
+
+  useScroll({callback});
+
   return (
-    <div className={cc([style.header, 'app-container h-[78px]'])}>
-      {/*<button*/}
-      {/*  className="h-[12px] children:cursor-pointer w-[38px] transition-all hover:opacity-75"*/}
-      {/*  onClick={() => toggleMenuFn()}*/}
-      {/*>*/}
-      {/*  <div*/}
-      {/*    className={cc([*/}
-      {/*      style.burgerMenu,*/}
-      {/*      {[style.burgerMenuActive]: $menuModel},*/}
-      {/*    ])}*/}
-      {/*  />*/}
-      {/*</button>*/}
-
-      <button>
-        <div />
-        <div />
-        <div />
-      </button>
-
+    <header ref={headerRef} className={cc([style.header, 'app-container h-[78px]'])}>
       <Logo path={ROUTES.home}/>
 
-      <nav className="flex items-center gap-5">
-        {NAV_LINKS.map(({path, name}) => {
-          const isActive = path === pathname;
-
-          return (
-            <Link
-              key={path}
-              className={`${style.NavLink} ${isActive && style.NavLinkActive}`}
-              href={path}
-            >
-              {name}
-            </Link>
-          );
-        })}
+      <nav className="flex items-center gap-3.5">
+        {NAV_LINKS.map((props) => <NavLink key={props.path} {...props} />)}
 
         <SearchDrawer />
 
-        {$profileModel ? (
-          <ProfileMenu />
-        ): (
-          <Icon
-            className={style.search}
-            name="user"
-            onClick={() => showModalFn('auth')}
-          />
+        {profileModel && (
+          <button className={style.headerButton}>
+            <Icon
+              className={style.search}
+              name="bell"
+            />
+          </button>
         )}
 
+        {profileModel ? (
+          <ProfileMenu />
+        ) : (
+          <button className={style.headerButton} onClick={() => showModalFn('auth')}>
+            <Icon
+              className={style.search}
+              name="user"
+            />
+          </button>
+        )}
       </nav>
-    </div>
+    </header>
   );
 };

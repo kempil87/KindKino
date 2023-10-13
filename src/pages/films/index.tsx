@@ -146,7 +146,7 @@ export default function Page() {
   }, [queryParams, filters]);
 
   return (
-    <MainLayout>
+    <MainLayout headProps={{title:'Фильмы'}}>
       <FormProvider {...methods}>
         <div className="app-container mb-6 mt-3 space-y-6">
           <Breadcrumbs breadcrumbs={[{label: 'Фильмы'}]}/>

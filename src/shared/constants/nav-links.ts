@@ -1,10 +1,11 @@
 import { ROUTES } from '~/shared/constants/routes-links';
-interface NavLink {
+export interface NavLinkProps {
   name: string;
   path: string;
 }
-export const NAV_LINKS: NavLink[] = [
+
+export const NAV_LINKS: NavLinkProps[] = [
   { name: 'Фильмы', path: ROUTES.films },
   { name: 'О нас', path: ROUTES.about },
-  { name: 'Подборки', path: ROUTES.collection },
+  { name: 'Подборки', path: ROUTES.collection() },
 ];

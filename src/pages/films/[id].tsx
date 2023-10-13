@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useRef } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -19,11 +19,17 @@ import {PersonPopover} from '~/components/person-popover/person-popover';
 import {Title} from '~/components/title/title';
 import {MainLayout} from '~/layout/main-layout/main-layout';
 
+const FilmFactsDynamic = dynamic(
+  () =>
+    import('~/components/film-facts/film-facts').then(
+      (res) => res.FilmFacts,
+    ),{
+    ssr:false
+  },
+);
+
 export default function Page() {
-  const {
-    query: { id },
-  } = useRouter();
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const {query: { id }} = useRouter();
 
   const filmQuery = useQuery({
     enabled: !!id,
@@ -61,17 +67,12 @@ export default function Page() {
     { label: `${filmQuery.data?.nameRu} (${filmQuery.data?.year})` },
   ];
 
-  const toggleDescription = () => {
-    if (descriptionRef.current) {
-      descriptionRef.current.classList.toggle('line-clamp-3');
-    }
-  };
-
   if (filmQuery.isLoading) return <AppLoader />;
 
   return (
     <MainLayout headProps={{ title: filmQuery.data?.nameRu || '' }}>
       <img
+        alt='banner'
         className="app-container fixed right-0 top-0 z-[30] h-screen object-cover blur-md"
         src={filmQuery.data?.posterUrl}
       />
@@ -194,23 +195,12 @@ export default function Page() {
           </div>
         </div>
 
-        <h2 className="my-4 text-[26px]">Описание</h2>
+        <Title>Описание</Title>
 
-        <p
-          ref={descriptionRef}
-          className={cc(['line-clamp-3 text-base transition-all'])}
-        >
-          {filmQuery.data?.description}
-        </p>
-        <button
-          className="mt-1 transition-all hover:text-primary"
-          onClick={toggleDescription}
-        >
-          Показать полностью
-        </button>
+        <p className='mt-2 text-base'>{filmQuery.data?.description}</p>
 
-        <div className='flex flex-col space-y-4 my-4'>
-          <Title>Похожие на {filmQuery.data?.nameRu} ({filmQuery.data?.year}) фильмы</Title>
+        <div className={cc(['flex flex-col space-y-4',{'my-4': !!filmSimilariesQuery.data?.items.length}])}>
+          {!!filmSimilariesQuery.data?.items.length && <Title>Похожие на {filmQuery.data?.nameRu} ({filmQuery.data?.year}) фильмы</Title>}
 
           {!filmSimilariesQuery.isLoading && filmSimilariesQuery.data && (
             <div className='grid grid-cols-6 gap-6'>
@@ -221,8 +211,8 @@ export default function Page() {
           )}
         </div>
 
-        <div className='flex flex-col space-y-4 my-4'>
-          <Title>Сиквелы и привеклы</Title>
+        <div className={cc(['flex flex-col space-y-4',{'my-4':!!filmPrequelsQuery.data?.length}])}>
+          {!!filmPrequelsQuery.data?.length && <Title>Сиквелы и привеклы</Title>}
 
           {!filmPrequelsQuery.isLoading && filmPrequelsQuery.data && (
             <div className='grid grid-cols-6 gap-6'>
@@ -233,6 +223,7 @@ export default function Page() {
           )}
         </div>
 
+        <FilmFactsDynamic id={filmQuery.data?.filmId || filmQuery.data?.kinopoiskId} />
       </div>
     </MainLayout>
   );

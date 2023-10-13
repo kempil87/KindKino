@@ -1,5 +1,6 @@
 import { apiRequest } from '~/shared/api';
 import {
+  ApiFilmFacts,
   ApiFilms,
   ApiFilmsAll, ApiFilmSimilary, ApiFilmSSequels,
   ApiFilmView,
@@ -8,6 +9,9 @@ import {
 export const fetchFilms = {
   all: (params?: ApiFilmsAll['req']): ApiFilmsAll['res'] =>
     apiRequest({ params, url: '/films' }),
+
+  facts: (params: ApiFilmView['req']): ApiFilmFacts['res'] =>
+    apiRequest({ url: `/films/${params?.id}/facts` }),
 
   prequels: (params: ApiFilmSSequels['req']): ApiFilmSSequels['res'] =>
     apiRequest({ url: `/films/${params?.id}/sequels_and_prequels`, v2_1:true }),

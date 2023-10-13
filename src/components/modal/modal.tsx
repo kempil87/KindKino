@@ -19,10 +19,14 @@ export const Modal = (props: PropsWithChildren<ModalProps>) => {
     >
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
       <div className={style.content} onClick={(e) => e.stopPropagation()}>
-        <h4 className="mb-4 text-2xl font-normal">{props.title}</h4>
+        {props.title && <h4 className="mb-4 text-2xl font-normal">{props.title}</h4>}
+
         <button className={style.closeIconWrap} onClick={onHide}>
-          <Icon name="close" />
+          {props.closeIcon && props.closeIcon || (
+            <Icon name="close" />
+          )}
         </button>
+
         <div>{props.children}</div>
       </div>
     </div>

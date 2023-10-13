@@ -1,4 +1,5 @@
 import {
+  FilmFactsResponse,
   FilmsAllRequest,
   FilmsAllResponse,
   FilmsRequest,
@@ -30,4 +31,9 @@ export interface ApiFilmSimilary {
 export interface ApiFilmSSequels {
   req: FilmViewRequest;
   res: Promise<FilmsAllResponse['items']>;
+}
+
+export interface ApiFilmFacts {
+  req: FilmViewRequest;
+  res: Promise<FilmFactsResponse>;
 }

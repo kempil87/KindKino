@@ -25,7 +25,7 @@ export const ProfileMenu = () => {
         {$profileModel.email}
       </div>
 
-      <div className='absolute flex translate-y-4 group-hover:translate-y-0 flex-col space-y-2.5 top-full mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all left-0 right-0 bg-dark rounded p-3'>
+      <div className='absolute flex translate-y-4 min-w-fit group-hover:translate-y-0 flex-col space-y-2.5 top-full mt-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all left-0 right-0 bg-dark rounded p-3'>
         <div className={cc([styles.text,'text-sm text-center font-medium'])}>
            PREMIUM
         </div>

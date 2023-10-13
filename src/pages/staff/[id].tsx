@@ -19,13 +19,12 @@ export default function Page() {
     queryKey: ['staff-view', id]
   });
 
-  console.log(data);
   const breadcrumbs = [{label: data?.nameRu || ''}];
 
   if (isLoading) return <AppLoader />;
 
   return (
-    <MainLayout>
+    <MainLayout {...data?.nameRu && {headProps:{title: data?.nameRu}}}>
       <div className='fixed inset-0'>
         <div
           className={cc([styles.staffBg,'w-full h-full bg-no-repeat bg-center'])}

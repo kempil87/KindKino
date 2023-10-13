@@ -2,7 +2,7 @@ import { MainLayout } from '~/layout/main-layout/main-layout';
 
 export default function AboutPage() {
   return (
-    <MainLayout classNameContent="app-container space-y-4">
+    <MainLayout classNameContent="app-container space-y-4 mt-[3rem] mb-[6rem]" headProps={{title:'О нас'}}>
       <h2 className="text-3xl font-medium mt-8">
         Онлайн-кинотеатр КиндКино: фильмы в хорошем качестве всегда приносят
         настоящее удовольствие

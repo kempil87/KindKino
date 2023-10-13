@@ -141,7 +141,7 @@ export const Select = ({
                       <button
                         key={option.value}
                         className={cc([
-                          'relative flex  w-full cursor-pointer items-center justify-between rounded-md px-3 py-1 text-sm text-white/60 transition-all hover:text-white',
+                          'relative flex break-words text-start w-full cursor-pointer items-center justify-between rounded-md px-3 py-1 text-sm text-white/60 transition-all hover:text-white',
                           {'!text-white': isSelected},
                         ])}
                         onClick={() => onSelectChange(option)}

@@ -30,7 +30,7 @@ export const MainLayout = ({
   return (
     <Fragment>
       <Head>
-        <title>{headProps?.title || 'KindKino'}</title>
+        <title>{headProps?.title || 'КиндКино'}</title>
         <meta content="KindKino" name="KindKino" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
         <link href="/favicon.ico" rel="icon" />

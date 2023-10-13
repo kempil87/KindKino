@@ -56,15 +56,16 @@ export const SearchDrawer = () => {
 
   return (
     <>
-      <Icon
-        className={style.search}
-        name='search'
-        onClick={showDrawer}
-      />
+      <button className={style.headerButton} onClick={showDrawer}>
+        <Icon
+          className={style.search}
+          name='search'
+        />
+      </button>
 
       <div
         ref={drawerRef}
-        className={cc(['fixed shadow-xl shadow-dark top-0 right-0 rounded-l-2xl w-[25vw] bottom-0 z-[500] h-screen bg-dark p-6 transition-all', {'translate-x-full': !isVisible}])}
+        className={cc(['fixed custom-shadow top-0 right-0 rounded-l-2xl w-[25vw] bottom-0 z-[500] h-screen bg-dark p-6 transition-all', {'translate-x-full': !isVisible}])}
       >
         <h3 className='text-2xl font-medium mb-3'>Найди любимые фильмы или серилы</h3>
 
@@ -93,11 +94,11 @@ export const SearchDrawer = () => {
             {filmsList.map((el,index) => (
               <>
                 {!!index && <div className="my-1 h-px w-full bg-gradient-to-r from-[#3f414b00] via-[#3F414B] to-[#3f414b00]" />}
-                <Link key={el.filmId} className='flex items-center space-x-2.5 rounded-xl  hover:shadow' href={ROUTES.film(String(el.kinopoiskId))}>
-                  <img alt='banner' className='size-16 rounded-xl object-cover' src={el.posterUrl}/>
+                <Link key={el.filmId} className='flex items-center space-x-3 rounded-xl hover:opacity-75 transition-all' href={ROUTES.film(String(el.kinopoiskId))}>
+                  <img alt='banner' className='min-h-[70px] min-w-[70px] max-h-[70px] max-w-[70px] rounded-xl object-cover' src={el.posterUrl}/>
 
                   <div className="flex flex-col">
-                    <span className='font-medium text-lg break-words'>
+                    <span className='font-medium text-lg line-clamp-2 pr-2'>
                       {el.nameRu}
                     </span>
                     <span className='font-medium text-grey text-sm break-words'>
