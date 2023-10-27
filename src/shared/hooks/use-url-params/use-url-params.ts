@@ -14,7 +14,7 @@ export const useUrlParams = () => {
 
   const updateUrlParams = async (
     params: Props[],
-    pushOptions?: TransitionOptions
+    pushOptions?: TransitionOptions,
   ) => {
     for (const { name, value } of params) {
       await push(
@@ -23,7 +23,7 @@ export const useUrlParams = () => {
           query: { ...query, [name]: value },
         },
         undefined,
-        pushOptions
+        pushOptions,
       );
     }
   };

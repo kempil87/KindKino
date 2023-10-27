@@ -7,6 +7,7 @@ export interface FilmsRequest {
 export type FilmsResponse = ApiPaginationResponse<{
   films: Film[];
 }>;
+
 export interface FilmsAllRequest extends Partial<PaginationParams> {
   countries?: string;
   genres?: string;
@@ -37,9 +38,9 @@ export interface FilmViewResponse extends Film {
 
 export interface FilmFactsResponse {
   items: {
-    'spoiler': boolean,
-    'text': string,
-    'type': 'BLOOPER' | 'FACT'
+    spoiler: boolean;
+    text: string;
+    type: 'BLOOPER' | 'FACT';
   }[];
   total: number;
 }
@@ -54,6 +55,7 @@ export interface Film {
   nameEn: string;
   nameRu: string;
   posterUrl: string;
+  premiereRu: string;
   rating: string;
   ratingImdb: string;
   ratingKinopoisk: string;
@@ -68,4 +70,3 @@ export interface FilmGenre {
 export interface FilmCountry {
   country: string;
 }
-

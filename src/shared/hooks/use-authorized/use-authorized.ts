@@ -1,16 +1,16 @@
-import {useEffect} from 'react';
+import { useEffect } from 'react';
 
-import {useUnit} from 'effector-react/scope';
+import { useUnit } from 'effector-react/scope';
 import Cookies from 'js-cookie';
 
-import {$auth, login} from '~/shared/models/auth';
-import {ProfileProps, updateProfile} from '~/shared/models/profile';
+import { $auth, login } from '~/shared/models/auth';
+import { ProfileProps, updateProfile } from '~/shared/models/profile';
 
 export const useAuthorized = () => {
-  const {authTokeModel,loginFn, updateProfileFn} = useUnit({
-    authTokeModel:$auth,
+  const { authTokeModel, loginFn, updateProfileFn } = useUnit({
+    authTokeModel: $auth,
     loginFn: login,
-    updateProfileFn: updateProfile
+    updateProfileFn: updateProfile,
   });
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const useAuthorized = () => {
       loginFn(cookies.authToken);
       updateProfileFn(JSON.parse(cookies.profile) as unknown as ProfileProps);
     }
-  },[loginFn, updateProfileFn]);
+  }, [loginFn, updateProfileFn]);
 
   return !!authTokeModel.authToken;
 };

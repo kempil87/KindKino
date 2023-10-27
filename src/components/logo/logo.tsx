@@ -1,4 +1,4 @@
-import React, {Fragment, HTMLProps} from 'react';
+import React, { Fragment, HTMLProps } from 'react';
 import Link from 'next/link';
 
 import cc from 'classcat';
@@ -24,10 +24,7 @@ export const Logo = ({ path, className }: Props) => {
   }
 
   return (
-    <Link
-      className={cc([style.logo, className])}
-      href={path}
-    >
+    <Link className={cc([style.logo, className])} href={path}>
       {renderContent()}
     </Link>
   );

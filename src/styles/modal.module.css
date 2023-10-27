@@ -1,11 +1,10 @@
 .modal {
-    @apply fixed inset-0 z-[8000] bg-black/70 flex justify-center items-center invisible opacity-0 transition-all
+    @apply fixed inset-0 z-[8000] bg-black/70 flex justify-center items-center invisible opacity-0 transition-all duration-300 touch-none
 }
 
 .modalActive {
-    @apply visible opacity-100 transition-all
+    @apply visible opacity-100 backdrop-blur
 }
-
 
 .content {
     @apply bg-dark p-10 rounded-2xl relative

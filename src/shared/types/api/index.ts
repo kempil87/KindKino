@@ -4,7 +4,7 @@ export type ApiPaginationResponse<T> = T & {
 
 export interface PaginationParams {
   page: number;
-  _limit?:number
+  _limit?: number;
 }
 
 export interface ApiFetchCommonParams {

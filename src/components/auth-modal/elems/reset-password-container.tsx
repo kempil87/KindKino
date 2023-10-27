@@ -1,21 +1,21 @@
-import {useState} from 'react';
+import { useState } from 'react';
 
-import {useFormContext} from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
-import {RULES} from '~/shared/constants/rules';
-import {showAlert} from '~/shared/utils/show-alert';
+import { RULES } from '~/shared/constants/rules';
+import { showAlert } from '~/shared/utils/show-alert';
 
-import {FormProps} from '~/components/auth-modal/auth-modal';
-import {Button} from '~/components/button/button';
-import {Input} from '~/components/input/input';
-import {OtpInput} from '~/components/otp-input/otp-input';
+import { FormProps } from '~/components/auth-modal/auth-modal';
+import { Button } from '~/components/button/button';
+import { Input } from '~/components/input/input';
+import { OtpInput } from '~/components/otp-input/otp-input';
 
 interface Props {
-    returnAuthFields: () => void
+  returnAuthFields: () => void;
 }
 
-export const ResetPasswordContainer = ({returnAuthFields}: Props) => {
-  const {handleSubmit, getValues} = useFormContext();
+export const ResetPasswordContainer = ({ returnAuthFields }: Props) => {
+  const { handleSubmit, getValues } = useFormContext();
   const [codeInputsVisible, setCodeInputsVisible] = useState(false);
 
   const getCode = () => {
@@ -24,52 +24,57 @@ export const ResetPasswordContainer = ({returnAuthFields}: Props) => {
 
   const sendCode = () => {
     returnAuthFields();
-    showAlert({message: 'Пароль успешно восстановлен!'});
+    showAlert({ message: 'Пароль успешно восстановлен!' });
   };
 
   if (codeInputsVisible) {
     return (
-      <form autoComplete='off' className="space-y-3 w-[600px]">
-        <div className='text-sm text-white/70 my-6'>
-              Отправили код вам на почту
-          {getValues('email') && <span className='text-base text-white pl-1'>{getValues('email')}</span>} ,
-              проверьте входящие письма.
+      <form autoComplete='off' className='w-[600px] space-y-3'>
+        <div className='my-6 text-sm text-white/70'>
+          Отправили код вам на почту
+          {getValues('email') && (
+            <span className='pl-1 text-base text-white'>
+              {getValues('email')}
+            </span>
+          )}{' '}
+          , проверьте входящие письма.
         </div>
-        <OtpInput<FormProps> formClassName='my-4' name='code' onReachEnd={sendCode}/>
+        <OtpInput<FormProps>
+          formClassName='my-4'
+          name='code'
+          onReachEnd={sendCode}
+        />
       </form>
     );
   }
 
   return (
-    <form autoComplete='off' className="space-y-3 w-[600px]">
+    <form autoComplete='off' className='w-[600px] space-y-3'>
       <Input<FormProps>
-        label="Почта"
-        name="email"
-        placeholder="Почта"
+        label='Почта'
+        name='email'
+        placeholder='Почта'
         rules={RULES.email}
       />
 
       <Input<FormProps>
-        label="Придумайте новый пароль"
-        name="password"
-        placeholder="Пароль"
+        label='Придумайте новый пароль'
+        name='password'
+        placeholder='Пароль'
         rules={RULES.password}
         // type='password'
       />
 
       <Input<FormProps>
-        label="Повторите новый пароль"
-        name="password_repeat"
-        placeholder="Новый пароль еще раз"
+        label='Повторите новый пароль'
+        name='password_repeat'
+        placeholder='Новый пароль еще раз'
         rules={RULES.password_repeat}
         // type='password'
       />
 
-      <Button
-        className="!mt-6 w-full"
-        onClick={handleSubmit(getCode)}
-      >
-          Восстановить пароль
+      <Button className='!mt-6 w-full' onClick={handleSubmit(getCode)}>
+        Восстановить пароль
       </Button>
     </form>
   );

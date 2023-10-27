@@ -27,7 +27,7 @@ export const AppLoader = () => {
   return (
     <div
       ref={loadingRef}
-      className="fixed inset-0 z-[1000] flex flex-col items-center justify-center gap-3 bg-black text-center"
+      className='fixed inset-0 z-[1000] flex flex-col items-center justify-center gap-3 bg-black text-center'
     >
       <Logo className='animate-pulse' />
     </div>

@@ -1,20 +1,34 @@
-import {HTMLAttributes, PropsWithChildren} from 'react';
+import { HTMLAttributes, PropsWithChildren } from 'react';
 import Link from 'next/link';
 
 import cc from 'classcat';
 
-import {Icon} from '~/components/icon/icon';
+import { Icon } from '~/components/icon/icon';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  path?: string
+  path?: string;
 }
 
-export const Title = ({children,path,...props}:PropsWithChildren<Props> ) => (
-  <div {...props} className={cc(['text-3xl font-medium',props.className,{'flex justify-between items-center':path}])}>
+export const Title = ({
+  children,
+  path,
+  ...props
+}: PropsWithChildren<Props>) => (
+  <div
+    {...props}
+    className={cc([
+      'text-3xl font-medium',
+      props.className,
+      { 'flex items-center justify-between': path },
+    ])}
+  >
     {children}
 
     {path && (
-      <Link className='text-base group children:transition-all transition-all flex space-x-3 items-center' href={path}>
+      <Link
+        className='group flex items-center space-x-3 text-base transition-all children:transition-all'
+        href={path}
+      >
         <span>Смотреть все</span>
 
         <div className='group-hover:translate-x-2'>

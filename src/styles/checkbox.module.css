@@ -1,0 +1,9 @@
+.checkbox {
+    @apply h-[18px] w-[18px] cursor-pointer appearance-none rounded !outline-primary/50 outline outline-1 bg-light_dark px-2 checked:!bg-light_dark
+}
+
+.checkbox:checked {
+    background: url("/images/check.svg") center center no-repeat;
+    background-size: 12px;
+}
+

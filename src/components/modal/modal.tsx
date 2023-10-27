@@ -11,20 +11,21 @@ export const Modal = (props: PropsWithChildren<ModalProps>) => {
   const { isVisible, modalRef, onHide } = useModal(props);
 
   return (
-  // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
     <div
       ref={modalRef}
       className={cc([style.modal, { [style.modalActive]: isVisible }])}
       onClick={onHide}
     >
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-      <div className={style.content} onClick={(e) => e.stopPropagation()}>
-        {props.title && <h4 className="mb-4 text-2xl font-normal">{props.title}</h4>}
+      <div
+        className={cc([style.content, props.className])}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {props.title && (
+          <h4 className='mb-4 text-2xl font-normal'>{props.title}</h4>
+        )}
 
         <button className={style.closeIconWrap} onClick={onHide}>
-          {props.closeIcon && props.closeIcon || (
-            <Icon name="close" />
-          )}
+          {(props.closeIcon && props.closeIcon) || <Icon name='close' />}
         </button>
 
         <div>{props.children}</div>

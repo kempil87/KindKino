@@ -1,12 +1,13 @@
 {
-  "name": "tapp",
+  "name": "kindkino",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettier": "prettier --write '**/*.{ts,tsx,json}'"
   },
   "browserslist": {
     "production": [
@@ -29,11 +30,11 @@
     "dayjs": "1.11.8",
     "effector": "22.8.6",
     "effector-react": "22.5.3",
+    "framer-motion": "^10.16.4",
     "google-map-react": "^2.2.1",
     "js-cookie": "^3.0.5",
     "keen-slider": "^6.8.5",
     "next": "13.4.4",
-    "nprogress": "0.2.0",
     "plural-ru": "2.0.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",

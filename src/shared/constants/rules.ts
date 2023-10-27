@@ -1,6 +1,6 @@
-import {RegisterOptions} from 'react-hook-form';
+import { RegisterOptions } from 'react-hook-form';
 
-type RulesFields = 'password' | 'password_repeat' | 'email' | 'search'
+type RulesFields = 'password' | 'password_repeat' | 'email' | 'search';
 export const RULES: Record<RulesFields, RegisterOptions> = {
   email: {
     pattern: {
@@ -38,6 +38,6 @@ export const RULES: Record<RulesFields, RegisterOptions> = {
     },
   },
   search: {
-    minLength: {message:'Введите 3 и более символа',value:3}
-  }
+    minLength: { message: 'Введите 3 и более символа', value: 3 },
+  },
 };

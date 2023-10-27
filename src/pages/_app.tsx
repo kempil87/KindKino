@@ -1,11 +1,11 @@
-import {useMemo} from 'react';
+import { useMemo } from 'react';
 import type { AppProps } from 'next/app';
 
 import { QueryClient } from '@tanstack/query-core';
 import { QueryClientProvider } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import {fork, Scope, serialize} from 'effector';
-import {Provider} from 'effector-react/scope';
+import { fork, Scope, serialize } from 'effector';
+import { Provider } from 'effector-react/scope';
 import { Toaster } from 'react-hot-toast';
 
 import './../styles/globals.css';
@@ -31,7 +31,6 @@ export const queryClient = new QueryClient({
 let clientScope: Scope;
 
 export default function App({ Component, pageProps }: AppProps) {
-
   const scope = useMemo(
     () =>
       fork({
@@ -52,7 +51,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
 
-        <Toaster position="top-right" />
+        <Toaster position='top-right' />
         <AppLoader />
       </QueryClientProvider>
     </Provider>

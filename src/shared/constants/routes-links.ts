@@ -1,6 +1,6 @@
 export const ROUTES = {
   about: '/about',
-  collection: (slug?:string) => `/collections${slug ? `/${slug}` : ''}`,
+  collection: (slug?: string) => `/collections${slug ? `/${slug}` : ''}`,
   contacts: '/contacts',
   error: '/404',
   favorites: '/favorites',

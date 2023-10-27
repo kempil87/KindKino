@@ -25,7 +25,7 @@
     "**/*.tsx",
     "next-env.d.ts",
     "next.config.js",
-    "public/static/**/*.js",
+    "public/static/**/*.js"
   ],
   "exclude": ["node_modules"]
 }

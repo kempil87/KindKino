@@ -1,9 +1,9 @@
-import {createEffect, createEvent, createStore, sample} from 'effector';
+import { createEffect, createEvent, createStore, sample } from 'effector';
 import Cookies from 'js-cookie';
 
 export interface ProfileProps {
-    email: string,
-    id: string
+  email: string;
+  id: string;
 }
 
 export type ProfileStore = ProfileProps | null;

@@ -6,6 +6,42 @@
     @apply bg-black/75 transition-all backdrop-blur-3xl custom-shadow
 }
 
+.menu {
+    @apply relative size-10 children:cursor-pointer menu:hidden
+}
+
+.menuActive:before {
+    top: 20px!important;
+    transform: rotate(-45deg);
+}
+
+.menuActive:after {
+    transform: rotate(45deg);
+    bottom: 18px!important;
+}
+
+.menu:before {
+    content: '';
+    top: 13px;
+    left: 0;
+    position: absolute;
+    height: 2px;
+    width: 44px;
+    background-color: white;
+    transition: all .2s linear;
+}
+
+.menu:after {
+    content: '';
+    bottom: 13px;
+    left: 0;
+    position: absolute;
+    height: 2px;
+    width: 44px;
+    background-color: white;
+    transition: all .2s linear;
+}
+
 .logo {
     @apply pos-abs
 }
@@ -29,11 +65,11 @@
 }
 
 .NavLink {
-    @apply transition-all hover:bg-dark px-3 py-1 rounded-md uppercase max-xl:hidden text-[15px]
+    @apply transition-all hover:bg-dark px-3 py-1 rounded-md uppercase text-[15px]
 }
 
 .NavLinkActive {
-    @apply bg-white px-3 py-1 rounded-md text-dark hover:bg-white
+    @apply bg-gray-200 px-3 py-1 rounded-md text-black hover:bg-white transition-all
 }
 
 .headerButton {

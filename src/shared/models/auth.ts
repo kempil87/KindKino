@@ -1,10 +1,10 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
 import Cookies from 'js-cookie';
 
-import {resetProfile} from '~/shared/models/profile';
+import { resetProfile } from '~/shared/models/profile';
 
 export interface AuthStore {
-    authToken: string | null;
+  authToken: string | null;
 }
 
 export const login = createEvent<string>();
@@ -26,7 +26,7 @@ const removeTokenCookieFx = createEffect(() => {
 
 sample({
   source: logout,
-  target: [removeTokenCookieFx,resetProfile],
+  target: [removeTokenCookieFx, resetProfile],
 });
 
 sample({

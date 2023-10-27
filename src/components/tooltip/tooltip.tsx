@@ -1,10 +1,11 @@
-import {cloneElement, PropsWithChildren, ReactElement} from 'react';
+import { cloneElement, PropsWithChildren, ReactElement } from 'react';
 
 import cc from 'classcat';
 
 interface Tooltip {
-    text: string,
-    position?: 'top' | 'bottom'| 'bottom_left',
+  text: string;
+  disable?: boolean;
+  position?: 'top' | 'bottom' | 'bottom_left';
 }
 
 const POSITIONS = {
@@ -13,14 +14,19 @@ const POSITIONS = {
   top: 'bottom-[calc(100%+8px)]',
 };
 
-export const Tooltip = ({text,position = 'top',children}: PropsWithChildren<Tooltip>) => (
-  <div className='relative group h-fit'>
+export const Tooltip = ({
+  text,
+  position = 'top',
+  children,
+  disable = false,
+}: PropsWithChildren<Tooltip>) => (
+  <div className={cc(['relative h-fit', { group: !disable }])}>
     {cloneElement(children as ReactElement)}
 
     <div
       className={cc([
-        'absolute text-sm invisible scale-0 text-[13px] text-white/60 left-1/2 whitespace-nowrap -translate-x-1/2 bg-dark rounded z-30 px-4 py-1 hover:!invisible hover:!scale-0 group-hover:visible group-hover:scale-100 transition-all',
-        POSITIONS[position]
+        'pointer-events-none invisible absolute left-1/2 z-30 -translate-x-1/2 scale-0 whitespace-nowrap rounded bg-dark px-4 py-1 text-[13px] text-sm text-white/60 transition-all custom-shadow hover:!invisible hover:!scale-0 group-hover:visible group-hover:scale-100',
+        POSITIONS[position],
       ])}
     >
       {text}

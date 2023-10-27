@@ -111,3 +111,14 @@ input[type=number] {
 .app-container {
     @apply px-[100px]
 }
+
+@layer {
+    .animated {
+        @apply transition-all duration-300
+    }
+    .premium-text {
+        background: linear-gradient(to right, #a12ec2 0%, #4875d7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}

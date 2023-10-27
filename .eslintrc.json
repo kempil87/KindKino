@@ -7,9 +7,7 @@
     },
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "project": [
-      "./tsconfig.json"
-    ]
+    "project": ["./tsconfig.json"]
   },
   "plugins": [
     "@typescript-eslint",
@@ -47,22 +45,13 @@
         "multiline": "last"
       }
     ],
-    "react/jsx-curly-brace-presence": [
-      "error",
-      "never"
-    ],
+    "react/jsx-curly-brace-presence": ["error", "never"],
     "react/display-name": "off",
-    "react/jsx-boolean-value": [
-      "error",
-      "never"
-    ],
+    "react/jsx-boolean-value": ["error", "never"],
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".tsx",
-          ".jsx"
-        ]
+        "extensions": [".tsx", ".jsx"]
       }
     ],
     // eslint
@@ -90,28 +79,16 @@
       },
       {
         "blankLine": "always",
-        "prev": [
-          "const",
-          "let"
-        ],
+        "prev": ["const", "let"],
         "next": "*"
       },
       {
         "blankLine": "any",
-        "prev": [
-          "const",
-          "let"
-        ],
-        "next": [
-          "const",
-          "let"
-        ]
+        "prev": ["const", "let"],
+        "next": ["const", "let"]
       }
     ],
-    "arrow-body-style": [
-      "error",
-      "as-needed"
-    ],
+    "arrow-body-style": ["error", "as-needed"],
     "no-unused-vars": "off",
     "no-console": "warn",
     "no-multi-spaces": "error",
@@ -128,14 +105,8 @@
         "SwitchCase": 1
       }
     ],
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "semi": [
-      "error",
-      "always"
-    ],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
     // import
     "import/no-unresolved": "off",
     // sort-keys-fix
@@ -184,20 +155,14 @@
     "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/no-var-requires": "off",
     // jsx-a11y
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
-        "components": [
-          "Link"
-        ],
-        "specialLink": [
-          "hrefLeft",
-          "hrefRight"
-        ],
-        "aspects": [
-          "invalidHref",
-          "preferButton"
-        ]
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
       }
     ],
     // simple-import-sort
@@ -205,31 +170,18 @@
       "error",
       {
         "groups": [
-          [
-            "^(react)(\\/.*|$)",
-            "^next"
-          ],
-          [
-            "^@?\\w"
-          ],
+          ["^(react)(\\/.*|$)", "^next"],
+          ["^@?\\w"],
           [
             "^(~/widgets)(/.*|$)",
             "^(~/entities)(/.*|$)",
             "^(~/features)(/.*|$)",
             "^(~/shared)(/.*|$)"
           ],
-          [
-            "^(~/mocks)(/.*|$)"
-          ],
-          [
-            "^\\."
-          ],
-          [
-            "(jpe?g|png|webp|svg|avif)$"
-          ],
-          [
-            "(css)$"
-          ]
+          ["^(~/mocks)(/.*|$)"],
+          ["^\\."],
+          ["(jpe?g|png|webp|svg|avif)$"],
+          ["(css)$"]
         ]
       }
     ],

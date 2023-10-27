@@ -37,3 +37,7 @@ export interface ApiFilmFacts {
   req: FilmViewRequest;
   res: Promise<FilmFactsResponse>;
 }
+
+export interface ApiFilmsPremiers {
+  res: Promise<FilmsAllResponse>;
+}
