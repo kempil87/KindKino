@@ -1,4 +1,4 @@
-export const PREFERENCES = [
+export const PREFERENCES: string[] = [
   'Фильмы',
   'Сериалы',
   'Мультфильмы',

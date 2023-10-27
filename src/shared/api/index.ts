@@ -20,9 +20,15 @@ export const apiRequest = async ({
   try {
     if (Router.pathname === '/404') return;
 
+    const urlBase = () => {
+      if (v1) return 'BASE_URL_V1';
+      if (v2_1) return 'BASE_URL_V2_1';
+
+      return 'BASE_URL';
+    };
+
     const response = await axios.request({
-      baseURL:
-        appConfig[v1 ? 'BASE_URL_V1' : v2_1 ? 'BASE_URL_V2_1' : 'BASE_URL'],
+      baseURL: appConfig[urlBase()],
       headers: {
         'Content-Type': 'application/json',
         'X-API-KEY': appConfig.key,

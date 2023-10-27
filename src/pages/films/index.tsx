@@ -141,6 +141,42 @@ export default function Page() {
     handleResetSelect();
   };
 
+  const renderContent = () => {
+    if (isLoading) {
+      return Array.from({ length: 16 }).map((_, key) => (
+        <div key={key} className=' h-full gap-1'>
+          <Skeleton
+            baseColor='#16171DFF'
+            borderRadius={16}
+            containerClassName='flex-1 !h-[130px] h-full'
+            height={330}
+            highlightColor='#101011'
+          />
+
+          <Skeleton
+            baseColor='#16171DFF'
+            borderRadius={8}
+            height={24}
+            highlightColor='#101011'
+          />
+
+          <Skeleton
+            baseColor='#16171DFF'
+            borderRadius={8}
+            containerClassName='m-auto flex mt-1 justify-center  w-full'
+            height={20}
+            highlightColor='#101011'
+            width='120px'
+          />
+        </div>
+      ));
+    }
+
+    return filmList.map((el) => (
+      <FilmCard eyeVisible {...el} key={el.kinopoiskId} />
+    ));
+  };
+
   useEffect(() => {
     getFilms();
   }, [selectStoreModel]);
@@ -212,38 +248,9 @@ export default function Page() {
               </Button>
             </div>
             <div className='grid w-full grid-cols-6 gap-8'>
-              {isLoading
-                ? Array.from({ length: 16 }).map((_, key) => (
-                    <div key={key} className=' h-full gap-1'>
-                      <Skeleton
-                        baseColor='#16171DFF'
-                        borderRadius={16}
-                        containerClassName='flex-1 !h-[130px] h-full'
-                        height={330}
-                        highlightColor='#101011'
-                      />
-
-                      <Skeleton
-                        baseColor='#16171DFF'
-                        borderRadius={8}
-                        height={24}
-                        highlightColor='#101011'
-                      />
-
-                      <Skeleton
-                        baseColor='#16171DFF'
-                        borderRadius={8}
-                        containerClassName='m-auto flex mt-1 justify-center  w-full'
-                        height={20}
-                        highlightColor='#101011'
-                        width='120px'
-                      />
-                    </div>
-                  ))
-                : filmList.map((el) => (
-                    <FilmCard eyeVisible {...el} key={el.kinopoiskId} />
-                  ))}
+              {renderContent()}
             </div>
+
             {!isLoading && totalPages !== page && (
               <Button disabled={isLoadButtonLoading} onClick={getMore}>
                 {isLoadButtonLoading ? 'Грузим еще фильмы' : 'Показать еще'}

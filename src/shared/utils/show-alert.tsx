@@ -1,10 +1,13 @@
 import toast from 'react-hot-toast';
 
+import { IconName } from '~/shared/constants/icons';
+
 import { ALERT_TYPES } from '../constants/alert-types';
 
 import style from '../../styles/alert.module.css';
 
-import { Icon, IconName } from '~/components/icon/icon';
+import { Icon } from '~/components/icon/icon';
+
 interface Props {
   message?: string;
   type?: 'error' | 'success' | 'warning' | 'info';

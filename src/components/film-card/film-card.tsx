@@ -121,11 +121,11 @@ export const FilmCard = (props: Props) => {
       <div className='overflow-hidden rounded-2xl'>
         <img
           alt={props.nameRu}
+          src={imageLoading ? imagePlug.src : props.posterUrl}
           className={cc([
             'h-[330px] w-full rounded-2xl object-cover transition-all',
             { 'brightness-50': imageLoading },
           ])}
-          src={imageLoading ? imagePlug.src : props.posterUrl}
           onLoad={onImageLoad}
         />
       </div>

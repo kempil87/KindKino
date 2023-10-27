@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { PREFERENCES } from '~/shared/constants/PREFERENCES';
+import { PREFERENCES } from '~/shared/constants/preferences';
 
 import { Modal } from '~/components/modal/modal';
 
