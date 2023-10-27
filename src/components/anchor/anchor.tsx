@@ -32,14 +32,13 @@ export const Anchor = () => {
       ])}
     >
       <Button
-        className='group !p-4 custom-shadow-primary hover:!bg-white hover:bg-opacity-100'
+        className='group !p-4 custom-shadow-primary hover:!bg-white hover:bg-opacity-100 max-md:scale-[0.8]'
         view='light'
         onClick={toTop}
       >
         <Icon
-          className='rotate-90 transition-all duration-500 group-hover:scale-125'
+          className='rotate-90 transition-all duration-500 size-5 group-hover:scale-125'
           name='arrow_long'
-          size={20}
         />
       </Button>
     </div>

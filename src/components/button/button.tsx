@@ -2,17 +2,11 @@ import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
 import cc from 'classcat';
 
-type ButtonView = 'default' | 'outline' | 'light';
+import { BUTTON_VIEW } from '~/shared/constants/button-views';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  view?: ButtonView;
+  view?: keyof typeof BUTTON_VIEW;
 }
-
-const BUTTON_VIEW: Record<ButtonView, HTMLButtonElement['className']> = {
-  default: 'primary-gradient hover:text-white/75',
-  light: 'text-black/60 text-base hover:bg-opacity-70 bg-white',
-  outline: '!bg-transparent border border-primary hover:text-white/75',
-};
 
 export const Button = ({
   view = 'default',

@@ -144,7 +144,7 @@ export default function Page() {
   const renderContent = () => {
     if (isLoading) {
       return Array.from({ length: 16 }).map((_, key) => (
-        <div key={key} className=' h-full gap-1'>
+        <div key={key} className='h-full gap-1'>
           <Skeleton
             baseColor='#16171DFF'
             borderRadius={16}
@@ -209,11 +209,13 @@ export default function Page() {
         <div className='app-container mb-6 mt-3 space-y-6'>
           <Breadcrumbs breadcrumbs={[{ label: 'Фильмы' }]} />
 
-          <h3 className='text-[34px] font-medium'>Фильмы смотреть онлайн</h3>
+          <h3 className='text-[34px] font-medium max-md:text-xl'>
+            Фильмы смотреть онлайн
+          </h3>
 
           <div className='m flex flex-col gap-8'>
-            <div className='flex w-full items-center justify-between'>
-              <div className='grid w-full grid-cols-4 gap-3'>
+            <div className='flex w-full items-center justify-between max-lg:flex-col'>
+              <div className='grid w-full grid-cols-3 gap-3 max-md:grid-cols-2 max-sm:grid-cols-1'>
                 <Select
                   // multiple
                   handleChange={filtersUpdate}
@@ -247,7 +249,7 @@ export default function Page() {
                 Сбросить фильтры
               </Button>
             </div>
-            <div className='grid w-full grid-cols-6 gap-8'>
+            <div className='grid w-full grid-cols-6 gap-8 max-2xl:grid-cols-4 max-xl:grid-cols-3 max-sm:grid-cols-1'>
               {renderContent()}
             </div>
 

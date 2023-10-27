@@ -3,10 +3,10 @@ import { MainLayout } from '~/layout/main-layout/main-layout';
 export default function AboutPage() {
   return (
     <MainLayout
-      classNameContent='space-y-4 app-container mt-[3rem] mb-[6rem]'
+      classNameContent='space-y-4 app-container md:mt-[3rem] mb-[6rem]'
       headProps={{ title: 'О нас' }}
     >
-      <h2 className='mt-8 text-3xl font-medium'>
+      <h2 className='mt-8 text-3xl font-medium max-md:mt-3 max-md:text-xl'>
         Онлайн-кинотеатр КиндКино: фильмы в хорошем качестве всегда приносят
         настоящее удовольствие
       </h2>

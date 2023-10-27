@@ -1,9 +1,9 @@
 .collectionTitle {
-    @apply text-3xl mb-8
+    @apply text-3xl mb-8 max-md:text-2xl
 }
 
 .collectionWrap {
-    @apply grid grid-cols-4 gap-8
+    @apply grid grid-cols-4 gap-8 max-md:grid-cols-2 max-lg:grid-cols-3 max-sm:grid-cols-1
 }
 
 .collectionItemWrap {
@@ -78,9 +78,6 @@
 }
 
 .collectionItem span {
-    @apply bg-dark rounded-2xl px-6 py-1 text-white font-medium uppercase text-center text-sm w-10/12
+    @apply bg-dark rounded-2xl px-6 py-1 text-white font-medium uppercase text-center text-sm w-10/12 max-xl:text-xs
 }
 
-.collectionItem p {
-    @apply text-white/50 text-center text-xs
-}

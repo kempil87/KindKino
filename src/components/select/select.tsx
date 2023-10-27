@@ -106,7 +106,7 @@ export const Select = ({
           return (
             <>
               <button
-                className='flex min-h-[40px] w-full cursor-pointer items-center rounded-md bg-dark outline-none'
+                className='flex min-h-[40px] w-full min-w-fit cursor-pointer items-center rounded-md bg-dark outline-none'
                 onClick={onFocus}
               >
                 <div

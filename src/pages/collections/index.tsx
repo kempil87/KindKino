@@ -25,7 +25,6 @@ export default function Collections() {
 
             <div className={style.collectionItem}>
               <span>{el.name}</span>
-              {/*<p>{el.description}</p>*/}
             </div>
           </Link>
         ))}

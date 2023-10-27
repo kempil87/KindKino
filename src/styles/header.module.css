@@ -43,7 +43,7 @@
 }
 
 .logo {
-    @apply pos-abs
+    @apply pos-abs max-sm:!text-3xl
 }
 
 .logo {
@@ -52,16 +52,16 @@
     align-items: center;
 }
 
-.logoLeft {
-    transform: rotate(-4deg);
+.logoLeft, .logoRight {
     text-shadow: 2px -2px 14px white;
     user-select: none;
+}
+.logoLeft {
+    transform: rotate(-4deg);
 }
 
 .logoRight {
     transform: rotate(4deg);
-    text-shadow: 2px -2px 14px white;
-    user-select: none;
 }
 
 .NavLink {

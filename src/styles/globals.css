@@ -109,7 +109,7 @@ input[type=number] {
 }
 
 .app-container {
-    @apply px-[100px]
+    @apply px-4 lg:px-[100px]
 }
 
 @layer {

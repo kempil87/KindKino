@@ -21,22 +21,19 @@ export const MainSlider = () => {
         <Skeleton
           baseColor='#16171DFF'
           borderRadius={16}
-          className='-translate-x-1/3'
-          height={530}
+          className='aspect-[4/1] min-h-[530px] -translate-x-1/3 max-lg:min-h-[330px] max-md:min-h-[230px] max-sm:-translate-x-1/2'
           highlightColor='#101011'
         />
         <Skeleton
           baseColor='#16171DFF'
           borderRadius={16}
-          className='scale-110 scale-x-150'
-          height={530}
+          className='aspect-[4/1] min-h-[530px] scale-110 scale-x-150 max-lg:min-h-[330px] max-md:min-h-[230px] max-sm:scale-x-[1.85]'
           highlightColor='#101011'
         />
         <Skeleton
           baseColor='#16171DFF'
           borderRadius={16}
-          className='translate-x-1/3'
-          height={530}
+          className='aspect-[4/1] min-h-[530px] translate-x-1/3 max-lg:min-h-[330px] max-md:min-h-[230px] max-sm:translate-x-1/2'
           highlightColor='#101011'
         />
       </div>
